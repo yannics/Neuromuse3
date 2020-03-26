@@ -1,0 +1,312 @@
+%===============================================================
+%% $ makeglossaries "n3"
+%\newglossaryentry{*}{
+%	name={*},
+%	%sort={a},
+%	description={}
+%	}
+
+\glsaddkey
+ {foo}% new key
+ {\relax}% default value if "foo" isn't used in \newglossaryentry
+ {\glsentryfoo}% analogous to \glsentrytext
+ {\Glsentryfoo}% analogous to \Glsentrytext
+ {\glsfoo}% analogous to \glstext
+ {\Glsfoo}% analogous to \Glstext
+ {\GLSfoo}% analogous to \GLStext
+ 
+\newglossaryentry{*available-area*}{
+	name={\texttt{*AVAILABLE-AREA*}},
+	plural={\texttt{*available-area*}},
+	description={
+	$\rightarrow$ \textit{list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+	
+\newglossaryentry{*available-som*}{
+	name={\texttt{*AVAILABLE-SOM*}},
+	plural={\texttt{*available-som*}},
+	description={
+	$\rightarrow$ \textit{list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+	
+\newglossaryentry{*n3-backup-directory*}{
+	name={\texttt{*N3-BACKUP-DIRECTORY*}},
+	plural={\texttt{*n3-backup-directory*}},
+	description={
+	$\rightarrow$ \textit{string}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+
+\newglossaryentry{*tree*}{
+	name={\texttt{*TREE*}},
+	plural={\texttt{*tree*}},
+	description={
+	$\rightarrow$ \textit{node} 
+	\vspace{2mm} \\ Last node built as root with \glspl{dendrogram}. ..}\bigskip
+	}
+	
+\newglossaryentry{cah-fanaux}{
+	name={\texttt{CAH-FANAUX}},
+	plural={\texttt{cah-fanaux}},
+	description={
+	\texttt{self}\myuline{[mlt]} \texttt{tree}\myuline{[node]} \texttt{n-class}\myuline{[int]}
+	\\ \textsl{{\&}key} \texttt{trim}\myuline{[bool]}
+	\\ $\rightarrow$ \textit{list}  
+	\vspace{2mm} \\ Divide the tree defined by \textit{self} into $n$ classes by trimming. The result is a list of leaves by class. If the key \textit{trim} is set, the result is a list of nodes. ..}\bigskip
+	}
+	
+\newglossaryentry{create-area}{
+	name={\texttt{CREATE-AREA}},
+	plural={\texttt{create-area}},
+	description={
+	\texttt{name}\myuline{[symbol]} \texttt{soms-list}\myuline{[list]} 
+	\\ $\rightarrow$ \textit{area}  
+	\vspace{2mm} \\ \textit{Macrocolonne} instantiation. ..}\bigskip
+	}
+		
+\newglossaryentry{create-mlt}{
+	name={\texttt{CREATE-MLT}},
+	plural={\texttt{create-mlt}},
+	description={
+	\texttt{name}\myuline{[symbol]} \texttt{n-input}\myuline{[int]} \texttt{n-neurons}\myuline{[int]} 
+	\\ \textsl{{\&}key} \texttt{carte}\myuline{[function]} \texttt{topology}\myuline{[int]} \texttt{field}\myuline{[list]} \texttt{n-fanaux}\myuline{[int]}
+	\\ $\rightarrow$ \textit{mlt}  
+	\vspace{2mm} \\ \textit{Colonne} instantiation with $n$ input as stimuli, and the number of neurons constituting the carte of the SOM.
+	\\ \texttt{:carte} -- Function (if lambda function then arguments are (\texttt{a}) the name as MLT and (\texttt{b}) the number of neurons). 
+	\\ \texttt{:topology} -- Number of dimension(s).
+	\\ \texttt{:field} -- List of maximum value by dimension.
+	\\ \texttt{:n-fanaux} -- Initiate the fanaux list according to the hierarchical clustering using Ward's method. ..}\bigskip
+	}	
+			
+\newglossaryentry{dendrogram}{
+	name={\texttt{DENDROGRAM}},
+	plural={\texttt{dendrogram}},
+	description={
+	\texttt{self}\myuline{[som$|$mlt$|$list]} \texttt{aggregation}\myuline{[int]} 
+	\\ \textsl{{\&}key} \texttt{diss-fun}\myuline{[function]} \texttt{newick}\myuline{[bool]} \texttt{with-label}\myuline{[bool]} \texttt{with-data}\myuline{[bool]} 
+	\\ $\rightarrow$ \textit{node} 
+	\vspace{2mm} \\ Compute the hierarchical clustering of \textit{self} using one of the following aggregation method: single linkage (1), complete linkage (2) and Ward's method (3).
+	\\ \texttt{:diss-fun} -- Function (if lambda function then arguments are (\texttt{a}) and (\texttt{b}) as two items to compare).  
+	\\ \texttt{:newick} -- Save \textit{newick} file (set by default).
+	\\ \texttt{:with-label} -- Display on the dendrogram the label of all nodes (by default only leaves are labelised).
+	\\ \texttt{:with-data} -- Write data file with for each line the \myuline{number of classes} according to the \myuline{minimal distance} of the parent node and the sum of all \myuline{intra-class inertia}.
+	 ..}\bigskip
+	}
+	
+\newglossaryentry{euclidean}{
+	name={\texttt{EUCLIDEAN}},
+     plural={\texttt{euclidean}},
+	description={
+	\texttt{arg1}\myuline{[neuron$|$som$|$list$|$null]} \texttt{arg2}\myuline{[neuron$|$list$|$null]} 
+	\\ \textsl{{\&}key} \texttt{modulo}\myuline{[bool]} \texttt{position}\myuline{[bool]} \texttt{weight}\myuline{[num$|$list]}
+	\\ $\rightarrow$ \textit{num}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+	
+\newglossaryentry{exp-decay}{
+	name={\texttt{EXP-DECAY}},
+     plural={\texttt{exp-decay}},
+	description={
+	\texttt{epoch}\myuline{[int]} \texttt{init-val}\myuline{[num]} \texttt{learning-rate}\myuline{[num]} 
+	\\ \textsl{{\&}optional} \texttt{final-val}\myuline{[num]}
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+
+\newglossaryentry{fn-mex}{
+	name={\texttt{FN-MEX}},
+     plural={\texttt{fn-mex}},
+	description={
+	\texttt{distance}\myuline{[num]} \texttt{radius}\myuline{[num]}  \texttt{learning-rate}\myuline{[num]}
+	\\ \textsl{{\&}key} \texttt{inh}\myuline{[num]}
+	\\ $\rightarrow$ \textit{num}  
+	\vspace{2mm} \\ `Mexican hat'. ..}\bigskip
+	}	
+
+\newglossaryentry{gauss}{
+	name={\texttt{GAUSS}},
+     plural={\texttt{gauss}},
+	description={
+	\texttt{distance}\myuline{[num]} \texttt{radius}\myuline{[num]}  \texttt{learning-rate}\myuline{[num]}
+	\\ $\rightarrow$ \textit{num}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+	
+\newglossaryentry{get-leaves}{
+	name={\texttt{GET-LEAVES}},
+	plural={\texttt{get-leaves}},
+	description={
+	\texttt{self}\myuline{[node]} 
+	\\ \textsl{{\&}key} \texttt{trim}\myuline{[num$|$node]}
+	\\ $\rightarrow$ \textit{list}  
+	\vspace{2mm} \\ List all leaves from \textit{self} as a root node, or from a given node or distance set with the key \textit{trim}. ..}\bigskip
+	}
+	
+\newglossaryentry{lambda*}{
+	name={\texttt{LAMBDA*}},
+	plural={\texttt{lambda*}},
+	description={
+	\textsl{{\&}rest} \texttt{args} \textsl{{\&}body} \texttt{body}
+	\\ $\rightarrow$ \textit{function}  
+	\vspace{2mm} \\ Macro as a `normal' lambda function allowing to keep track of the `source code'. ..}\bigskip
+	}
+	
+\newglossaryentry{learn}{
+	name={\texttt{LEARN}},
+	plural={\texttt{learn}},
+	description={
+	\texttt{self}\myuline{[som$|$mlt$|$area]} 
+	\\ \textsl{{\&}key} \texttt{seq}\myuline{[list]}
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{2mm} \\ The key \textit{seq} takes as argument a ordered list of sequential input data according to the \texttt{soms-list}; the data can be a list of input data or a data file defined by its pathname as such or as a string, or \textit{nil} by default. ..}\bigskip
+	}	
+
+\newglossaryentry{load-neural-network}{
+	name={\texttt{LOAD-NEURAL-NETWORK}},
+	plural={\texttt{load-neural-network}},
+	description={
+	\texttt{nn}\myuline{[string]} 
+	\\ $\rightarrow$ \textit{nil}  
+	\vspace{2mm} \\ Load SOM, MLT or AREA according to its full pathname or according to its name if it is stored in the \glspl{*n3-backup-directory*} -- see diagram on figure \ref{fig:lnn} page \pageref{fig:lnn}. ..}\bigskip
+	}	
+	
+\newglossaryentry{locate-clique}{
+	name={\texttt{LOCATE-CLIQUE}},
+	plural={\texttt{locate-clique}},
+	description={
+	\texttt{self}\myuline{[area]} \texttt{nodes}\myuline{[list]} 
+	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{test}\myuline{[function]}
+	\\ $\rightarrow$ \textit{list}  
+	\vspace{2mm} \\ List of potential \textit{microcolonne}(s) constituting a clique from a partial list of node(s). ..}\bigskip
+	}
+
+\newglossaryentry{locate-cycle}{
+	name={\texttt{LOCATE-CYCLE}},
+	plural={\texttt{locate-cycle}},
+	description={
+	\texttt{nodes}\myuline{[list$|$hash-table]}  
+	\\ \textsl{{\&}optional} \texttt{order}\myuline{[int]}	
+	\\ $\rightarrow$ \textit{list}  
+	\vspace{2mm} \\ List all cycles from a list of edges. ..}\bigskip
+	}	
+	
+\newglossaryentry{locate-tournoi}{
+	name={\texttt{LOCATE-TOURNOI}},
+	plural={\texttt{locate-tournoi}},
+	description={
+	\texttt{self}\myuline{[mlt]} \texttt{nodes}\myuline{[list]} 
+	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{test}\myuline{[function]}
+	\\ $\rightarrow$ \textit{list}  
+	\vspace{2mm} \\ List of potential \textit{tournoi}(s) -- in the form of a one-dimensional coordinate position list of the \textit{microcolonnes} of the temporally ordered \texttt{fanaux-list} of \textit{self} -- whose order is defined by the length of the \textit{tournoi} and where each unknown is represented by a wild card type `?'.\\ When the \texttt{remanence} is effective, it takes into account the \texttt{cover-value} during learning. ..}\bigskip
+	}		
+
+\newglossaryentry{net-menu}{
+	name={\texttt{NET-MENU}},
+	plural={\texttt{net-menu}},
+	description={
+	Display available network to load. ..}\bigskip
+	}
+
+\newglossaryentry{next-event-probability}{
+	name={\texttt{NEXT-EVENT-PROBABILITY}},
+	plural={\texttt{next-event-probability}},
+	description={
+	\texttt{head}\myuline{[list]} \texttt{self}\myuline{[list$|$mlt$|$area]} 
+	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{result}\myuline{[keyword]}
+	\\ $\rightarrow$ \textit{sym}$|$\textit{int}
+	\vspace{2mm} \\ Compute the probability of an event to occur after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) temporally ordered when \textit{self} is respectively MLT or AREA.
+	\\ The key \texttt{:result} takes as argument:
+	\\ \texttt{:compute} by default or,
+	\\ \texttt{:list} as an ordered list of probabilities or,
+	\\ \texttt{:verbose} to display the probabilities. ..}\bigskip
+	}
+	
+\newglossaryentry{osc-listen}{
+	name={\texttt{OSC-LISTEN}},
+	plural={\texttt{osc-listen}},
+	description={
+	\texttt{port}\myuline{[int]} 
+	\vspace{2mm} \\ Usage: \\ 
+	{\small \texttt{\#+sbcl (defparameter listen-port-7771 (sb-thread:make-thread }} \\
+	\hspace*{3mm} {\small \texttt{\#'(lambda () (osc-listen 7771)) :name "listen-port-7771"))}} \\
+	{\small \texttt{\#+ccl (defparameter listen-port-7771 (ccl:process-run-function}} \\  
+	\hspace*{3mm} {\small \texttt{"listen-port-7771" \#'(lambda () (osc-listen 7771))))}} ..}\bigskip
+	}
+	
+\newglossaryentry{quadrare}{
+	name={\texttt{QUADRARE}},
+     plural={\texttt{quadrare}},
+	description={
+	\texttt{self}\myuline{[som]} \texttt{nbre-neurons}\myuline{[int]} 
+	\\ \textsl{{\&}key} \texttt{about}\myuline{[int]} \texttt{topology}\myuline{[int]}
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{2mm} \\ Multidimensional mapping according to the relationship $\sqrt[d]{N} \in \mathbb{N}$ with $N$ the number of neurons and $d$ the number of dimensions. ..}\bigskip
+	}	
+
+\newglossaryentry{rand-map}{
+	name={\texttt{RAND-MAP}},
+     plural={\texttt{rand-map}},
+	description={
+	\texttt{self}\myuline{[som]} \texttt{nbre-neurons}\myuline{[int]} 
+	\\ \textsl{{\&}key} \texttt{about}\myuline{[int]} \texttt{topology}\myuline{[int]}
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{2mm} \\ Random multidimensional mapping. ..}\bigskip
+	}	
+					
+\newglossaryentry{save}{
+	name={\texttt{SAVE}},
+	plural={\texttt{save}},
+	description={
+	\texttt{self}\myuline{[node$|$som$|$mlt$|$area]} 
+	\\ $\rightarrow$ \textit{nil}  
+	\vspace{2mm} \\ Save \textit{self} in \glspl{*n3-backup-directory*}.
+	\\ If \textit{self} is a node, it is saved in the following subdirectories: 
+	\\ {\small \texttt{/SOM[name]/aggregation[number]+NODE[name]+SOM[epoch]/}}. ..}\bigskip
+	}	
+
+\newglossaryentry{send-udp}{
+	name={\texttt{SEND-UDP}},
+	plural={\texttt{send-udp}},
+	description={
+	\texttt{message}\myuline{[list]} \texttt{host}\myuline{[string]} \texttt{port}\myuline{[int]} 
+	\\ $\rightarrow$ \textit{T}  
+	\vspace{2mm} \\ The message is a list of string. ..}\bigskip
+	}
+
+\newglossaryentry{tree-menu}{
+	name={\texttt{TREE-MENU}},
+	plural={\texttt{tree-menu}},
+	description={
+	Display available tree to load. ..}\bigskip
+	}
+
+\newglossaryentry{update-cover-value}{
+	name={\texttt{UPDATE-COVER-VALUE}},
+	plural={\texttt{update-cover-value}},
+	description={
+	\texttt{self}\myuline{[mlt]} \texttt{val}\myuline{[int]} 
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{2mm} \\ Allow to update the cover-value -- if not nil -- of \textit{self} and, consequently, the hash table defined by the slot \texttt{trns} and the short-term memory defined by the slot \texttt{mct}. ..}\bigskip
+	}
+		
+\newglossaryentry{update-fanaux}{
+	name={\texttt{UPDATE-FANAUX}},
+	plural={\texttt{update-fanaux}},
+	description={
+	\texttt{self}\myuline{[mlt]} \texttt{n-fanaux}\myuline{[int]} 
+	\\ $\rightarrow$ \textit{No value}  
+	\vspace{2mm} \\ Allow to (re-)initiate the fanaux-list of \textit{self} -- updating if needed all connections linked with the old fanaux list by surjection (see note \ref{surj} on \cpageref{surj}). ..}\bigskip
+	}
+		
+%\newglossaryentry{functionname}{
+%	name={\texttt{FUNCTIONNAME}},
+%     plural={\texttt{functionname}},
+%	description={
+%	\texttt{arg1}\myuline{[classof]} \texttt{arg2}\myuline{[classof1$|$classof2]} 
+%	\\ \textsl{{\&}key} \texttt{key}\myuline{[classof]}
+%	\\ $\rightarrow$ \textit{result}  
+%	\vspace{2mm} \\ Description. ..}\bigskip
+%	}	
+%===============================================================

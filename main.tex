@@ -1,0 +1,474 @@
+\documentclass{article}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\newcommand{\head}[1]{\textnormal{\textbf{#1}}}
+\newcommand{\normal}[1]{\multicolumn{1}{l}{#1}}
+
+\usepackage{enumitem}
+\usepackage[square]{natbib}
+\usepackage{tocloft}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[francais]{babel}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+\usepackage{fontawesome}
+
+\usepackage{tikz}
+\let\svtikzpicture\tikzpicture
+\def\tikzpicture{\noindent\svtikzpicture}
+
+\makeatletter
+\def\input@path{{./src/}}
+%or: \def\input@path{{/path/to/folder/}{/path/to/other/folder/}}
+\makeatother
+
+\setlength{\cftbeforepartskip}{18pt}
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\usepackage{titlesec}
+\usepackage{csquotes}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor={magenta},
+	citecolor={magenta}
+	}
+\usepackage{upquote}
+\usepackage[xindy={glsnumbers=false}]{glossaries}
+	\makeglossaries	
+        \loadglsentries{glossary}		
+\setglossarystyle{altlist}
+%\setglossarystyle{altlistgroup}
+%\setglossarystyle{altlisthypergroup}	
+%% $ makeglossaries "n3"
+\usepackage{contour}
+\usepackage{ulem}
+\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}} 
+\renewcommand{\ULdepth}{1.8pt}
+\contourlength{0.8pt}
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{listings}
+\lstset{
+    literate={~} {$\sim$}{1}
+}
+\lstdefinelanguage{sectitle}{
+    language=Lisp,
+   backgroundcolor=\color{yellow!10},  
+    escapechar={\@, \#},
+    morecomment=[s][\color{violet!80}]{\ *}{*},
+    morekeywords=[2]{NEUROMUSE3, INTRODUCTION,  PRESENTATION, SELF, ORGANIZING, MAP, TOPOLOGY, HIERACHICAL, CLUSTERING, SHORT-TERM, LONG-TERM, MEMORY, BIBLIOGRAPHY, DEVELOPMENTAL, LEARNING, DOCUMENTATION, REFERENCES, SEQUENCING, INDEX, CLIQUE, TOURNOI, PROLEGOMENA, ANNEX, APOSTIL},
+    commentstyle=\color{black!50},
+    numberstyle=\color{white},
+    stringstyle=\color{darkgray},
+    basicstyle=\ttfamily\normalsize,
+    keywordstyle=[2]\color{orange}
+}
+\usepackage{setspace}
+\usepackage{wrapfig}
+\usepackage{cleveref}
+
+\makeatletter
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\smallskip\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+
+\newenvironment{notes}[1]{%
+\tcolorbox[savedelimiter=note,
+coltitle=purple!50,
+colback=blue!5!white,
+colframe=blue!10!white,
+title=\bfseries\sffamily NOTE
+%\hfill\smash{\raisebox{-11pt}{\includegraphics[width=1cm,height=1cm]{1223}}} 
+, breakable]}%
+{\endtcolorbox}
+
+\begin{document}
+\input{listing}
+
+\begin{lstlisting}[language=sectitle]
+;; Yann Ics <by.cmsc@gmail.com>
+;************************************
+;      2013<>2020@COPYLEFT
+;      ALL WRONGS RESERVED
+;************************************
+; SLIME 2.20
+CL-USER> (require package 'NEUROMUSE3)
+loaded: OSC
+loaded: NEUROMUSE3
+NIL
+CL-USER> (in-package :N3)
+#<PACKAGE "N3">
+N3> 
+\end{lstlisting}
+%loaded: SB-BSD-SOCKETS
+
+\bigskip
+\bigskip
+
+\begin{chapquote}{\textit{Understanding Media}, \citep{mm} p. 351.}
+``Any process that approaches instant interrelation of a total field tends to raise itself to the level of conscious awareness, so that
+computers seem to `think'. In fact, they are highly specialized at present, and quite lacking in the full process of interrelation that
+makes for consciousness. Obviously, they can be made to simulate the process of consciousness, just as our electric global networks now begin to simulate the condition of our central nervous system. But a conscious computer would still be one that was an extension of our consciousness.''
+\end{chapquote}
+
+\bigskip
+\begin{spacing}{0.1}
+
+\renewcommand*\contentsname{Contents}
+\tableofcontents
+\end{spacing}
+
+\bigskip
+\bigskip
+\renewcommand*\listfigurename{List of figures}
+\listoffigures
+
+%\bigskip
+%\bigskip
+%\renewcommand*{\listtablename}{List of tables}
+%\listoftables
+
+\bigskip
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~2&" *PART-1* 36 #\*)
+INTRODUCTION
+;************************************
+
+NIL
+N3> (format t "~A" *CHAPTER-1*)
+PRESENTATION
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Introduction}
+\phantomsection
+\addcontentsline{toc}{section}{1. Presentation}
+
+\bigskip
+\input{presentation}
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-2*)
+SELF ORGANIZING MAP
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{2. Self Organizing Map}
+
+\bigskip
+\input{som}
+%\bigskip
+%\bigskip
+\newpage
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-3*)
+TOPOLOGY
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{3. Topology}
+\label{topology}
+
+\bigskip
+\input{topology}
+\bigskip
+\bigskip
+
+\newpage
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~2&" *PART-2* 36 #\*)
+PROLEGOMENA
+;************************************
+
+NIL
+N3> (format t "~A" *CHAPTER-4*)
+HIERACHICAL CLUSTERING
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Prolegomena}
+\phantomsection
+\addcontentsline{toc}{section}{4. Hierarchical clustering}
+
+\bigskip
+\input{cah}
+\bigskip
+\bigskip
+
+%\newpage
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-5*)
+CLIQUE
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{5. Clique}
+
+\bigskip
+\input{clique}
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-6*)
+TOURNOI
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{6. \textit{Tournoi}}
+
+\bigskip
+\input{tournoi}
+\bigskip
+\bigskip
+
+\begin{table}
+\small
+\centering
+\begin{tabular}{r*1{c>{\ttfamily}l}cll}
+  
+  &   & \normal{\head{Slot}} & \normal{\head{\hspace{2mm} Input}}
+  & \normal{\head{Note}} \\
+  
+    \midrule
+ 
+  \multirow{7}{*}{NEURON} 
+  &   & name & NEURON &  \\
+  &   & net & RNA &   \\
+  &   & xpos & \itshape list & as coordinates  \\
+  &   & synapses-list & \itshape list  &   \\
+  & \faCog  & temperature & \itshape number &   \\
+  &   & erreur & \itshape number &   \\
+  &   & output & \itshape list &   \\
+  
+    \midrule
+
+\multirow{12}{*}{RNA} 
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & SOM &  \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & nbre-neurons & \itshape integer &   \\
+  &   & neurons-list & \itshape list &   \\
+  & \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage}  & nbre-input & \itshape integer &   \\
+  & \faCog  & input & \itshape list &  \\
+  &  \faCog & radius & \itshape number &   \\
+  &  \faCog & learning-rate & \itshape number &   \\
+  &   & date-report & \itshape hash-table  &  \\
+  &   & epoch & \itshape integer &   \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &   \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & daemons & \textit{thread}$|$\textit{list} &  \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & superdaemon & \textit{thread}$|$\textit{list} &   \\
+  
+  \midrule
+
+ \multirow{7}{*}{SOM} 
+  &   & neuron-gagnant & NEURON &  \\
+  &  \faCog & distance-in & \itshape function &   \\
+  &  \faCog & distance-out & \itshape function &   \\
+  &  \faCog & voisinage & \itshape function &   \\
+  & \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage}  & carte & \itshape function &  \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & field & \textit{number}$|$\textit{list} &  {\footnotesize if \textit{list}; $||$\texttt{field}$||$ = \texttt{topology}} \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & topology & \itshape integer &   \\
+  
+  \midrule
+  
+   \multirow{6}{*}{MLT} 
+  &   & net & AREA &  \\
+  &  \faCode & fanaux-list & \itshape list & $\rightarrow$ \glspl{update-fanaux} \\
+  & \faCode  & cover-value & \itshape integer & $\rightarrow$ \glspl{update-cover-value} \\
+  &   & mct & \itshape list &   \\
+  &   & onset & \itshape hash-table &   \\
+  &   & fine & \itshape hash-table &   \\
+  &   & trns & \itshape hash-table &   \\
+  &   & arcs & \itshape hash-table &   \\
+  
+  \midrule
+  
+   \multirow{8}{*}{AREA} 
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & AREA &  \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & soms-list & \itshape list &   \\
+  &   & fanaux-length & \itshape integer &   \\
+  &   & current-clique & \itshape list &   \\
+  & \faCog  & sensorial-rate & \itshape number &   \\
+  &   & arcs & \itshape hash-table &   \\
+  &   & date-report & \itshape hash-table &  \\
+  & \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage}  & udp-list & \itshape list &   \\
+  
+\end{tabular}
+\caption{\label{table:class}List of N3 classes with their respective slots.}
+\end{table}
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *PART-3* 36 #\*)
+SHORT-TERM MEMORY
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Short-term memory}
+
+\bigskip
+\input{mct}
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *PART-4* 36 #\*)
+LONG-TERM MEMORY
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Long-term memory}
+
+\bigskip
+\input{mlt}
+\bigskip
+\bigskip
+
+\newpage
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *PART-5* 36 #\*)
+DEVELOPMENTAL LEARNING
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Developmental learning}
+
+\bigskip
+\input{ideal}
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *PART-6* 36 #\*)
+SEQUENCING
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Sequencing}
+
+\bigskip
+\input{sequencing}
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~2&" *END-PART* 36 #\*)
+DOCUMENTATION
+;************************************
+
+NIL
+N3> (format t "~A" *CHAPTER-A*)
+INDEX
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Documentation}
+\phantomsection
+\addcontentsline{toc}{section}{Index}
+
+\renewcommand*{\glossarypreamble}{\vspace{-1cm}}
+\printglossary[title={}] 
+\glsaddallunused
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=\columnwidth]{2801}
+\caption{Synoptic diagram of \glspl{load-neural-network}.}
+\label{fig:lnn}
+\end{center}
+\end{figure}
+
+%\bigskip
+%\vspace{-5mm}
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-B*)
+REFERENCES
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{References}
+\input{ref}
+\bigskip
+\bigskip
+
+%\newpage
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A" *CHAPTER-C*)
+BIBLIOGRAPHY
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{section}{Bibliography}
+\input{bib}
+
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *NOTE* 36 #\*)
+APOSTIL
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Apostil}
+
+\bigskip
+
+This documentation aimed to present the \textsl{Neuromuse3} project to this point in time. Also, the project is intended as a reflection about what can be an Artificial Intelligence in a musical context. 
+
+Some work needs to be completed, some other achieved.
+
+\bigskip
+
+The \textsl{Long-term memory} part has to be experimented more deeply, especially for the (re-)construction of sequences. 
+
+\bigskip
+
+The coding of the \textsl{Developmental learning} part is still ongoing. 
+After that, one has to merge IDEAL with AREA, by creating classes able to manage both systems. The scope of this work is to say the least about the philosophical approach it is possible to envisage, and on which terms. Indeed, in music, the `walls' are not  fixed and solid objects. The musical environment is very dependant of what has been learned and how forged by its own ontology. Moreover, the character `sensitive' -- which must be linked to a kind of mood -- has to be defined in terms of computing language. The challenge seems daunting, but one must take it up, at least because it can learn a lot about us as a human being.
+
+\bigskip
+
+Thanks for any support or contribution you could bring ...
+
+\bigskip 
+\bigskip
+
+%\newpage
+\centerline{\texttt{{\footnotesize ... to be continued ...}}}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=2.7cm]{2223}
+\end{center}
+\end{figure}
+\vspace{-5mm}
+\centerline{\texttt{{\footnotesize ... work in progress ...}}}
+
+\end{document}
