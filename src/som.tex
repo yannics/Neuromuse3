@@ -47,9 +47,13 @@ or between a set of stimuli and its response -- slot \texttt{distance-out} -- wh
 
 The SOM initiation is done either with the defmethod \texttt{init-som} or simply with the N3 function \glspl{create-mlt} with as arguments the name of the SOM, the number of stimuli and the number of neurons in the map.
 
-\bigskip
+\smallskip
 
-The activation consists to compute for each neuron the error defined by $|| x(t) - m_i(t) || + noise$. The `$noise$' is defined by the slot \texttt{temperature} as a random value between zero and this value, allowing the simulation of some bias activities induced by biological complexity of a neuronal network.
+The activation consists to compute for each neuron the error defined by $|| x(t) - m_i(t) ||$. 
+
+\smallskip
+
+Note that the data input has to be adjusted such as each component has a value between 0 and 1 in order to match the range of the output as weight values during initialisation.
 
 \bigskip
 
@@ -77,7 +81,7 @@ See also Table \ref{table:class} on page \pageref{table:class} for all parameter
 \caption{\label{table:bf}The package N3 provides some basic functions.}
 \begin{center}
 \begin{tabular}{| p{3cm} | p{5.5cm}}
-Mapping & \glspl{quadrare}, \glspl{rand-map} \\ 
+Mapping & \glspl{quadrare}, \glspl{rnd-map} \\ 
 Proximity & \glspl{euclidean} \\  
 Neighborhood & \glspl{gauss}, \glspl{fn-mex} \\   
 Decreasing & \glspl{exp-decay} 

@@ -85,13 +85,13 @@
 	plural={\texttt{dendrogram}},
 	description={
 	\texttt{self}\myuline{[som$|$mlt$|$list]} \texttt{aggregation}\myuline{[int]} 
-	\\ \textsl{{\&}key} \texttt{diss-fun}\myuline{[function]} \texttt{newick}\myuline{[bool]} \texttt{with-label}\myuline{[bool]} \texttt{with-data}\myuline{[bool]} 
+	\\ \textsl{{\&}key} \texttt{diss-fun}\myuline{[function]} \texttt{newick}\myuline{[bool]} \texttt{with-label}\myuline{[bool]} \texttt{and-data}\myuline{[bool]} 
 	\\ $\rightarrow$ \textit{node} 
 	\vspace{2mm} \\ Compute the hierarchical clustering of \textit{self} using one of the following aggregation method: single linkage (1), complete linkage (2) and Ward's method (3).
 	\\ \texttt{:diss-fun} -- Function (if lambda function then arguments are (\texttt{a}) and (\texttt{b}) as two items to compare).  
 	\\ \texttt{:newick} -- Save \textit{newick} file (set by default).
 	\\ \texttt{:with-label} -- Display on the dendrogram the label of all nodes (by default only leaves are labelised).
-	\\ \texttt{:with-data} -- Write data file with for each line the \myuline{number of classes} according to the \myuline{minimal distance} of the parent node and the sum of all \myuline{intra-class inertia}.
+	\\ \texttt{:and-data} -- Write data file with for each line the \myuline{number of classes} according to the \myuline{minimal distance} of the parent node and the sum of all \myuline{intra-class inertia}.
 	 ..}\bigskip
 	}
 	
@@ -148,7 +148,7 @@
 	name={\texttt{LAMBDA*}},
 	plural={\texttt{lambda*}},
 	description={
-	\textsl{{\&}rest} \texttt{args} \textsl{{\&}body} \texttt{body}
+	\textsl{lambda-list}
 	\\ $\rightarrow$ \textit{function}  
 	\vspace{2mm} \\ Macro as a `normal' lambda function allowing to keep track of the `source code'. ..}\bigskip
 	}
@@ -245,9 +245,9 @@
 	\vspace{2mm} \\ Multidimensional mapping according to the relationship $\sqrt[d]{N} \in \mathbb{N}$ with $N$ the number of neurons and $d$ the number of dimensions. ..}\bigskip
 	}	
 
-\newglossaryentry{rand-map}{
-	name={\texttt{RAND-MAP}},
-     plural={\texttt{rand-map}},
+\newglossaryentry{rnd-map}{
+	name={\texttt{RND-MAP}},
+     plural={\texttt{rnd-map}},
 	description={
 	\texttt{self}\myuline{[som]} \texttt{nbre-neurons}\myuline{[int]} 
 	\\ \textsl{{\&}key} \texttt{about}\myuline{[int]} \texttt{topology}\myuline{[int]}

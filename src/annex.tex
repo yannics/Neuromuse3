@@ -1,0 +1,98 @@
+%\bigskip
+
+%\noindent {\large \textbf{Displaying a learning process of a SOM through SuperCollider via OSC}}
+
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\section{Displaying a learning process of a SOM \\through SuperCollider via OSC}
+\label{ann:color}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+
+\bigskip
+
+This code has been used to generate the illustrations of the figure \ref{fig:ex1} on page \pageref{fig:ex1} and its report is just about to give an idea about how to use N3 to mapping SOM and OSC protocol from N3 to SuperCollider -- mind that it works for limited SOM (100 neurons is fine -- that is to say $10\times10$), and
+\textit{in fine}, the use of a graphical software like Processing\footnote{\href{https://processing.org/}{\texttt{\scriptsize https://processing.org/}}} will be more appropriate to display more complex configuration.
+
+\bigskip
+
+\begin{lstlisting}[language=SuperCollider]
+/*
+(create-mlt 'COLOR 3 100 :carte #'quadrare) 
+;; or :carte #'rnd-map
+
+;; to keep track of the initial value
+(dolist (e (neurons-list COLOR)) 
+   (setf (synapses-list e) (output e)))
+
+;; retrieve initial state
+;(dolist (e (neurons-list COLOR)) 
+;   (setf (output e) (synapses-list e)))
+
+;; set distance with modulo
+;(setf (distance-in COLOR) 
+;   (lambda* (a b) (euclidean a b :position t :modulo t)))
+
+(let* ((num 3000) ;;  5 minutes with *latency* = 0.1
+       (mvl (multiple-value-list (normalize-data 
+          (loop for i in (neurons-list COLOR) 
+             collect (synapses-list i)))))
+       (dataset (car mvl))
+       ;(fact (car (last mvl))) ; to retrieve initial dataset
+       (initial-learning-rate 0.1)
+       (initial-radius (/ (funcall #'mean 
+          (list! (field COLOR))) 2))
+       (initial-epoch (epoch COLOR)))
+  (setf *latency* 0.1)
+  (dotimes (k num)
+    (setf (input COLOR)
+          (nth (random (length dataset)) dataset)
+          (radius COLOR)
+          (exp-decay (1+ (- (epoch COLOR) initial-epoch)) initial-radius num 0.1)
+          (learning-rate COLOR)
+          (exp-decay (+ 1 (- (epoch COLOR) initial-epoch)) initial-learning-rate num 0.01))
+    (learn COLOR)
+    (send-udp (read-from-string 
+       (format nil 
+          "(\"\/N3-COLOR\" \"[~{[~{~S~^, ~}]~^, ~}]\")" 
+          (loop for e in (neurons-list COLOR) 
+             collect 
+             (append (xpos (id e)) (output (id e))))))
+       "127.0.0.1" 7771)
+    (sleep *latency*)))
+*/
+
+(
+var w, o, data, a = 10, b = 50;
+w = Window("SOM activity: COLOR",
+    Rect(rrand(100, 200), rrand(100, 200), a*b, a*b));
+w.view.background = Color(0, 0, 0, 1);
+w.onClose = {o.free};
+w.front;
+w.alwaysOnTop_(true);
+thisProcess.openUDPPort(7771);
+o = OSCFunc({ arg msg, time, addr, recvPort;
+    data=msg[1];
+    data=data.asString.interpret;
+    {
+		x = UserView(w, Rect(0, 0, a*b, a*b)).canFocus_(false);
+		x.drawFunc = {
+			Pen.use {
+				Pen.width = 0.2;
+				Array.fill(data.size,{|i|
+					Pen.color = Color.new(
+						data[i][2], 
+						data[i][3], 
+						data[i][4]);
+	//Pen.addOval(Rect(data[i][0]*b, data[i][1]*b, b/2, b/2));
+					Pen.addRect(Rect(
+						data[i][0]*b, 
+						data[i][1]*b, 
+						b, b));
+					Pen.perform(\fill);
+				});
+			};
+		};
+       x.refresh;
+    }.defer;
+}, '/N3-COLOR');
+)
+\end{lstlisting}

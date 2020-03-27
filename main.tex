@@ -111,7 +111,8 @@ title=\bfseries\sffamily NOTE
 ;************************************
 ; SLIME 2.20
 CL-USER> (require package 'NEUROMUSE3)
-loaded: OSC
+loaded: CLOSER-MOP
+loaded: FOSC|OSC
 loaded: NEUROMUSE3
 NIL
 CL-USER> (in-package :N3)
@@ -141,10 +142,10 @@ makes for consciousness. Obviously, they can be made to simulate the process of 
 \renewcommand*\listfigurename{List of figures}
 \listoffigures
 
-%\bigskip
-%\bigskip
-%\renewcommand*{\listtablename}{List of tables}
-%\listoftables
+\bigskip
+\bigskip
+\renewcommand*{\listtablename}{List of tables}
+\listoftables
 
 \bigskip
 \bigskip
@@ -198,7 +199,6 @@ N3>
 \bigskip
 \bigskip
 
-\newpage
 \begin{lstlisting}[language=sectitle]
 N3> (format t "~A~&;~v@{~A~:*~}~2&" *PART-2* 36 #\*)
 PROLEGOMENA
@@ -389,7 +389,6 @@ NIL
 N3> 
 \end{lstlisting}
 \addcontentsline{toc}{part}{Documentation}
-\phantomsection
 \addcontentsline{toc}{section}{Index}
 
 \renewcommand*{\glossarypreamble}{\vspace{-1cm}}
@@ -470,5 +469,18 @@ Thanks for any support or contribution you could bring ...
 \end{figure}
 \vspace{-5mm}
 \centerline{\texttt{{\footnotesize ... work in progress ...}}}
+
+\bigskip
+\bigskip
+
+\begin{lstlisting}[language=sectitle]
+N3> (format t "~A~&;~v@{~A~:*~}~&" *CODE* 36 #\*)
+ANNEX
+;************************************
+NIL
+N3> 
+\end{lstlisting}
+\addcontentsline{toc}{part}{Annex}
+\input{annex}
 
 \end{document}
