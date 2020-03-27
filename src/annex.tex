@@ -23,24 +23,18 @@ This code has been used to generate the illustrations of the figure \ref{fig:ex1
 (dolist (e (neurons-list COLOR)) 
    (setf (synapses-list e) (output e)))
 
-;; retrieve initial state
-;(dolist (e (neurons-list COLOR)) 
-;   (setf (output e) (synapses-list e)))
-
 ;; set distance with modulo
 ;(setf (distance-in COLOR) 
 ;   (lambda* (a b) (euclidean a b :position t :modulo t)))
 
-(let* ((num 3000) ;;  5 minutes with *latency* = 0.1
-       (mvl (multiple-value-list (normalize-data 
-          (loop for i in (neurons-list COLOR) 
-             collect (synapses-list i)))))
-       (dataset (car mvl))
-       ;(fact (car (last mvl))) ; to retrieve initial dataset
-       (initial-learning-rate 0.1)
-       (initial-radius (/ (funcall #'mean 
-          (list! (field COLOR))) 2))
-       (initial-epoch (epoch COLOR)))
+(let ((num 3000) ;;  5 minutes with *latency* = 0.1
+      (dataset (scaling
+         (loop for i in (neurons-list COLOR) 
+            collect (synapses-list i)) :mlt COLOR))
+      (initial-learning-rate 0.1)
+      (initial-radius (/ (funcall #'mean 
+         (list! (field COLOR))) 2))
+      (initial-epoch (epoch COLOR)))
   (setf *latency* 0.1)
   (dotimes (k num)
     (setf (input COLOR)
