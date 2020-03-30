@@ -202,6 +202,22 @@
 	\vspace{2mm} \\ List of potential \textit{tournoi}(s) -- in the form of a one-dimensional coordinate position list of the \textit{microcolonnes} of the temporally ordered \texttt{fanaux-list} of \textit{self} -- whose order is defined by the length of the \textit{tournoi} and where each unknown is represented by a wild card type `?'.\\ When the \texttt{remanence} is effective, it takes into account the \texttt{cover-value} during learning. ..}\bigskip
 	}		
 
+\newglossaryentry{mapping}{
+	name={\texttt{MAPPING}},
+	plural={\texttt{mapping}},
+	description={
+	\texttt{self}\myuline{[som]} \texttt{iteration}\myuline{[int]} \texttt{dataset}\myuline{[list]}
+	\\ \textsl{{\&}key} \texttt{init-lr} \myuline{[num]} \texttt{end-lr} \myuline{[num]} \texttt{init-rad} \myuline{[num]} \texttt{end-rad} \myuline{[num]} \\ \texttt{dfun}\myuline{[function]} \texttt{dtype} \myuline{[keyword]}
+	\\ $\rightarrow$ \textit{No value} 
+	\vspace{2mm} 
+	\\ \texttt{:init-lr} -- Initial \texttt{learning-rate} (0.1 by default).
+	\\ \texttt{:end-lr} -- Final \texttt{learning-rate} (0.01 by default).
+	\\ \texttt{:init-rad} -- Initial \texttt{radius} (mean value of the \texttt{field} of \textit{self} divided by 2).
+	\\ \texttt{:end-rad} -- Final \texttt{radius} (0.1 by default).
+	\\ \texttt{:dfun} -- Decreasing function (\glspl{exp-decay} by default).
+	\\ \texttt{:dtype} -- Normalisation type applied to the \textit{dataset} (\texttt{:flat} by default). ..}\bigskip
+	}
+	
 \newglossaryentry{net-menu}{
 	name={\texttt{NET-MENU}},
 	plural={\texttt{net-menu}},
@@ -265,6 +281,18 @@
 	\\ If \textit{self} is a node, it is saved in the following subdirectories: 
 	\\ {\small \texttt{/SOM[name]/aggregation[number]+NODE[name]+SOM[epoch]/}}. ..}\bigskip
 	}	
+
+\newglossaryentry{scaling}{
+	name={\texttt{SCALING}},
+	plural={\texttt{scaling}},
+	description={
+	\texttt{data}\myuline{[num$|$list]}
+	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{mlt}\myuline{[mlt]} \\ \texttt{data-type}\myuline{[keyword]}
+	\\ $\rightarrow$ \textit{num}$|$\textit{list}  
+	\vspace{2mm} \\ Normalize \textit{data} value(s) occuring between \texttt{:minin} and \texttt{:minout} -- as minimal and maximal values of the dataset by default -- within the interval \texttt{:minout} and \texttt{:maxout}, respectively $0$ and $1$ by default.  
+	\\ \texttt{:mlt} -- Allows to set the slot \texttt{data-scale} in order to retrieve initial data values or to keep track of the data range according to the MLT as this value. In that case, only the default values of keys are taken into account.
+	\\ \texttt{:data-type} -- Specify the normalisation type such as by dimension \texttt{:dim} (set as a list of intervals), only 0/1 values \texttt{:bin} (set as 0), by event \texttt{:std} (set as 1) or by default \texttt{:flat} (set as an interval). ..}\bigskip
+	}
 
 \newglossaryentry{send-udp}{
 	name={\texttt{SEND-UDP}},

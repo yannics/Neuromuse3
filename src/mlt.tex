@@ -110,6 +110,18 @@ Let the following procedure be an illustration of the principle of the learning 
    ...
 (create-area 'AREANAME (list SOMNAME1 SOMNAME2 ...))
 
+;; Mapping 
+(loop
+   for i in '(SOMNAME1 SOMNAME2 ...)
+   for data in '("~/dat1" "~/dat2" ...)
+   ;; normalize data input 
+   ;; -> keywords list as :flat :dim or :bin 
+   for k in '(...) 
+   do
+   (setf (distance-in (id i))
+	   (lambda* (a b) (euclidean a b :position t :modulo t)))
+   (mapping (id i) 50000 (read-data (id i) data) :dtype k))
+     
 ;; Learn the sequence `in time'.
 (learn AREANAME :seq '("~/dat1" "~/dat2" ...))
 \end{lstlisting}
