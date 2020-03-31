@@ -115,7 +115,7 @@ Let the following procedure be an illustration of the principle of the learning 
    for i in '(SOMNAME1 SOMNAME2 ...)
    for data in '("~/dat1" "~/dat2" ...)
    ;; normalize data input 
-   ;; -> keywords list as :flat :dim or :bin 
+   ;; -> keywords list as :flat :dim :bin :std or nil 
    for k in '(...) 
    do
    (setf (distance-in (id i))

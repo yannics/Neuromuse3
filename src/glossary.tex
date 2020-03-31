@@ -212,10 +212,10 @@
 	\vspace{2mm} 
 	\\ \texttt{:init-lr} -- Initial \texttt{learning-rate} (0.1 by default).
 	\\ \texttt{:end-lr} -- Final \texttt{learning-rate} (0.01 by default).
-	\\ \texttt{:init-rad} -- Initial \texttt{radius} (mean value of the \texttt{field} of \textit{self} divided by 2).
+	\\ \texttt{:init-rad} -- Initial \texttt{radius} (the default value is the mean value of the \texttt{field} of \textit{self} divided by 2).
 	\\ \texttt{:end-rad} -- Final \texttt{radius} (0.1 by default).
 	\\ \texttt{:dfun} -- Decreasing function (\glspl{exp-decay} by default).
-	\\ \texttt{:dtype} -- Normalisation type applied to the \textit{dataset} (\texttt{:flat} by default). ..}\bigskip
+	\\ \texttt{:dtype} -- Normalisation type applied to the \textit{dataset} (see description of the key \texttt{:data-type} within the function \glspl{scaling}). ..}\bigskip
 	}
 	
 \newglossaryentry{net-menu}{
@@ -290,8 +290,8 @@
 	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{mlt}\myuline{[mlt]} \\ \texttt{data-type}\myuline{[keyword]}
 	\\ $\rightarrow$ \textit{num}$|$\textit{list}  
 	\vspace{2mm} \\ Normalize \textit{data} value(s) occuring between \texttt{:minin} and \texttt{:minout} -- as minimal and maximal values of the dataset by default -- within the interval \texttt{:minout} and \texttt{:maxout}, respectively $0$ and $1$ by default.  
-	\\ \texttt{:mlt} -- Allows to set the slot \texttt{data-scale} in order to retrieve initial data values or to keep track of the data range according to the MLT as this value. In that case, only the default values of keys are taken into account.
-	\\ \texttt{:data-type} -- Specify the normalisation type such as by dimension \texttt{:dim} (set as a list of intervals), only 0/1 values \texttt{:bin} (set as 0), by event \texttt{:std} (set as 1) or by default \texttt{:flat} (set as an interval). ..}\bigskip
+	\\ \texttt{:mlt} -- Allows to retrieve initial data values or to keep track of the data range according to the MLT as this value. In that case, only the default values of keys are taken into account except the key \textit{data-type} if it is specified. 
+	\\ \texttt{:data-type} -- Specify the normalisation type (store in the slot \texttt{data-scale} of the key \textit{mlt}) such as by dimension \texttt{:dim} (set as a list of intervals), only 0/1 values \texttt{:bin} (set as 0), by event \texttt{:std} (set as 1) or according to all values of \textit{data} \texttt{:flat} (set as an interval). If this key is not specified, the normalisation is done according to \texttt{data-scale}. If the latter is \textit{nil}, then the default key value will be set as \texttt{:flat}.  ..}\bigskip
 	}
 
 \newglossaryentry{send-udp}{
