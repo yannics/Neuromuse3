@@ -44,7 +44,9 @@ Thus, the method \glspl{next-event-probability} allows to compute the probabilit
 
 \smallskip
 
-Then, the purpose of this function allows to estimate an occurrence -- with the key \texttt{:result :compute} (set by default) -- by choosing a number at random between $0$ and $1$ such as this interval is conformed to the ordered repartition of probabilities.
+Then, the purpose of this function allows to estimate an occurrence -- with the key \texttt{:result :compute} (set by default) -- through the key function \texttt{:compute} (set with the function \texttt{rnd-weight} by default). 
+
+The function \texttt{rnd-weight} allows to choose a number at random between $0$ and $1$ such as this interval is conformed to the ordered repartition of probabilities (see the coloured stripes under the next code snippets).
 
 \bigskip
 

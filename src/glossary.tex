@@ -230,9 +230,9 @@
 	plural={\texttt{next-event-probability}},
 	description={
 	\texttt{head}\myuline{[list]} \texttt{self}\myuline{[list$|$mlt$|$area]} 
-	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{result}\myuline{[keyword]}
+	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{result}\myuline{[keyword]} \texttt{compute}\myuline{[function]}
 	\\ $\rightarrow$ \textit{sym}$|$\textit{int}
-	\vspace{2mm} \\ Compute the probability of an event to occur after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) temporally ordered when \textit{self} is respectively MLT or AREA.
+	\vspace{2mm} \\  Estimate from probabilities -- according to the function defined by the key \textit{compute} -- the occurrence of an event after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) temporally ordered when \textit{self} is respectively MLT or AREA.
 	\\ The key \texttt{:result} takes as argument:
 	\\ \texttt{:compute} by default or,
 	\\ \texttt{:list} as an ordered list of probabilities or,
@@ -315,6 +315,7 @@
 	plural={\texttt{update-cover-value}},
 	description={
 	\texttt{self}\myuline{[mlt]} \texttt{val}\myuline{[int]} 
+	\\ \textsl{{\&}key} \texttt{compute}\myuline{[function]}
 	\\ $\rightarrow$ \textit{No value}  
 	\vspace{2mm} \\ Allow to update the cover-value -- if not nil -- of \textit{self} and, consequently, the hash table defined by the slot \texttt{trns} and the short-term memory defined by the slot \texttt{mct}. ..}\bigskip
 	}

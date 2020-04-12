@@ -43,15 +43,20 @@ The (re-)construction is effective when a learned sequence can be retraced as re
 The method \glspl{locate-clique} allows a first estimation of possible clique(s) according to two possible inputs:
 \begin{enumerate}
 \item isolated node(s): \texttt{((microcolonne\_indice colonne\_indice) …)}
-\item ordered node(s): list of \textit{microcolonne} indice(s) and/or wild card ordered according to the soms-list.
+\item ordered node(s): list of \textit{microcolonne} indice(s) and/or wild card ordered according to the soms-list. \label{txt:on}
 \end{enumerate}
 
 All connected  \textit{microcolonnes} to known elements are listed. This is what we observe on the figure \ref{fig:mlt1} with the nodes (4 0) and (1 3), respectively the fifth \textit{fanal} of SOM 1 and the second \textit{fanal} of SOM 4. 
 All microcolonnes whose connection number is equal to the number of known elements are collected. These connections are represented in solid lines.
 
+\smallskip
+
+Thus, we obtain a list of potential cliques ordered according to their respective weights in terms of probability. 
+
+\newpage
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=8cm]{2701}
+\includegraphics[width=9cm]{2701}
 \caption[Cliques estimation on a network AREA (partial view) composed of four SOM of five \textit{fanaux}.]{Cliques estimation on a network AREA (partial view\protect\footnotemark) composed of four SOM of five \textit{fanaux}.}
 \label{fig:mlt1}
 \end{center}
@@ -59,9 +64,6 @@ All microcolonnes whose connection number is equal to the number of known elemen
 
 \footnotetext{Generated with \color{n3comment}{{\small \texttt{(N3::>dot AREANAME \textquotesingle((4 0) (1 3)))}}}.}
 
-Thus, we obtain a list of potential cliques ordered according to their respective weights in terms of probability. 
-
-\bigskip
 \begin{lstlisting}[language=N3]
 (locate-clique AREANAME '((4 0) (1 3))) ;; isolated nodes
 ;; or 
@@ -74,10 +76,14 @@ Thus, we obtain a list of potential cliques ordered according to their respectiv
 
 \bigskip
 
-As seen before in the part 3 \textsl{Short-Term Memory}, it is possible at the AREA level to compute a potential clique according to some previous -- can be partial -- cliques interpreted in time as \textit{tournois} with or without remanence with the function \glspl{next-event-probability}.
+As seen before in the part 3 \textsl{Short-Term Memory}, it is possible at the AREA level to compute a potential clique according to some previous -- can be partial -- cliques interpreted in time as \textit{tournois} with or without remanence with the function \glspl{next-event-probability}. The latter takes as the \textit{head} argument a list of temporally ordered clique(s) and these are a list of ordered nodes in accordance with the second point seen previously on page \pageref{txt:on} referring to \texttt{locate-clique}.
+
+\smallskip
 
 To estimate the weight of a potential clique -- as for the \textit{tournoi} (except with remanence) -- one takes the mean value of the weights of all edges constituting such clique or \textit{tournoi}. 
 
+\smallskip
+\newpage
 Concerning the remanence at the AREA level, the probability for a given clique is done according to the previous cliques in terms of \textit{tournois} (also with remanence) as:
 
 $$P_{C(T)} = \displaystyle \prod_{i \in SL} P(E_{n_i}|E_{p_i})$$
@@ -132,7 +138,7 @@ Following this procedure, mind the ordered arrangement of the sequence between t
 Note that each element of the sequence can be a path as a string or as a pathname or a data list.
 
 \bigskip 
-
+\newpage
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=\columnwidth]{4356}
@@ -141,9 +147,9 @@ Note that each element of the sequence can be a path as a string or as a pathnam
 \end{center}
 \end{figure}
 
-\footnotetext{\begin{itemize}
-\item[$\bullet$] The learning is dependant of the encoding in relation to the desired environment or the kind of required `control'.
-\item[$\bullet$]  Each sequence is identified upstream and downstream by a `\textit{tout-à-zéro}' marker. 
-\item[$\bullet$]  The learning at the AREA level consists to activate the current clique (via \textit{microcolonnes} activation) in order to record it as arcs. At the same time, each MLT records arcs and \textit{tournois} connected to the previous clique. 
+\footnotetext{Note that:\begin{itemize}
+\item[$\bullet$] the learning is dependant of the encoding in relation to the desired environment or the kind of required `control';
+\item[$\bullet$]  each sequence is identified upstream and downstream by a `\textit{tout-à-zéro}' marker; 
+\item[$\bullet$]  the learning at the AREA level consists to activate the current clique (via \textit{microcolonnes} activation) in order to record it as arcs. At the same time, each MLT records arcs and \textit{tournois} connected to the previous clique. 
 \end{itemize}}
 
