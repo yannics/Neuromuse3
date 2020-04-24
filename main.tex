@@ -9,6 +9,8 @@
 \usepackage[square]{natbib}
 \usepackage{tocloft}
 
+\usepackage{amsmath}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -116,7 +118,9 @@ loaded: NEUROMUSE3
 NIL
 CL-USER> (in-package :N3)
 #<PACKAGE "N3">
-N3> 
+N3> (version)
+3.0.9
+NIL
 \end{lstlisting}
 %loaded: SB-BSD-SOCKETS
 
@@ -303,7 +307,6 @@ N3>
   &   & fine & \itshape hash-table &   \\
   &   & trns & \itshape hash-table &   \\
   &   & arcs & \itshape hash-table &   \\
-  &   & data-scale & \itshape integer$[$list & scale data input  \\
   
   \midrule
   
@@ -349,7 +352,7 @@ N3>
 \bigskip
 \bigskip
 
-\newpage
+%\newpage
 \begin{lstlisting}[language=sectitle]
 N3> (format t "~A~&;~v@{~A~:*~}~&" *PART-5* 36 #\*)
 DEVELOPMENTAL LEARNING
@@ -456,7 +459,7 @@ After that, one has to merge IDEAL with AREA, by creating classes able to manage
 
 \bigskip
 
-\texttt{\small Currently developed with SBCL 2.0.2 and CCL64 1.11.}
+\texttt{\small Currently developed with SBCL 2.0.3 and CCL64 1.11.}
 
 \bigskip
 
@@ -469,7 +472,8 @@ Thanks for any support or contribution you could bring ...
 \centerline{\texttt{{\footnotesize ... to be continued ...}}}
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=2.7cm]{2223}
+\includegraphics[width=1.7cm]{2223}
+%\includegraphics[width=2.7cm]{2223}
 \end{center}
 \end{figure}
 \vspace{-5mm}
