@@ -120,13 +120,14 @@ Let the following procedure be an illustration of the principle of the learning 
 (loop
    for i in '(SOMNAME1 SOMNAME2 ...)
    for data in '("~/dat1" "~/dat2" ...)
-   ;; normalize data input 
-   ;; -> keywords list as :flat :dim :bin :std or nil 
-   for k in '(...) 
+   ;; ------------------
+   ;; set SCALING key(s) as a list of key+val for each SOM
+   for kv in '((keyword val ...) ...) 
+   ;; ------------------
    do
    (setf (distance-in (id i))
 	   (lambda* (a b) (euclidean a b :position t :modulo t)))
-   (mapping (id i) 50000 (read-data (id i) data) :dtype k))
+   (mapping (id i) 50000 (read-data (id i) data) :ds kv))
      
 ;; Learn the sequence `in time'.
 (learn AREANAME :seq '("~/dat1" "~/dat2" ...))
@@ -138,8 +139,8 @@ Following this procedure, mind the ordered arrangement of the sequence between t
 Note that each element of the sequence can be a path as a string or as a pathname or a data list.
 
 \bigskip 
-\newpage
-\begin{figure}[htbp]
+%\newpage
+\begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=\columnwidth]{4356}
 \caption[Summary of the learning process in N3.]{Summary of the learning process in N3\protect\footnotemark.}
@@ -152,4 +153,27 @@ Note that each element of the sequence can be a path as a string or as a pathnam
 \item[$\bullet$]  each sequence is identified upstream and downstream by a `\textit{tout-à-zéro}' marker; 
 \item[$\bullet$]  the learning at the AREA level consists to activate the current clique (via \textit{microcolonnes} activation) in order to record it as arcs. At the same time, each MLT records arcs and \textit{tournois} connected to the previous clique. 
 \end{itemize}}
+
+
+\noindent {\large \textbf{About scaling}}
+\label{pt:as}
+
+\bigskip
+
+The bias in N3 is to normalise the input data in order to fit in a range between 0 and 1. The function \glspl{scaling} allows managing any input data according to some modalities applied at the SOM level (key \texttt{:mlt}). By default, the `data-scale' is bypassed. Then, to initiate or to interpret the data inputs, one needs to consider the following parameters:
+\begin{itemize}
+\item[] \myuline{the range} which is estimated by default between the minimal value and the maximal value of the dataset (any other values outside the range will be clipped);
+\item[] \myuline{the curve} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
+%source: https://github.com/supercollider/supercollider/blob/develop/SCClassLibrary/Common/Math/SimpleNumber.sc
+$$dataOut=\frac{(dataIn-inMin)(outMax-outMin)}{inMax-inMin}+outMin$$
+and if the input data $< 0$ (concave, negatively curved as exponential scale with the value $1-e$) or $> 0$ (convex, positively curved as a logarithmic scale with the value $e-1$) then:
+$$dataOut=ln\left(\dfrac{b-dataIn}{a}\right)\dfrac{outMax-outMin}{curve}+outMin$$
+with $b=inMin+a$,  $a=\dfrac{inMax-inMin}{1-grow}$ and $grow=e^{curve}$ -- with a limited value such as the curve should be set between +18 and -16 to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
+\item[] \myuline{the type} of the data input as:
+\begin{itemize}
+\item[$\bullet$] \textbf{norm} valid for all numbers, the argument is the range as a list with `minval' and `maxval' plus optionally the value of the curve (0 by default), or a number as the curve value; %if the range is known;
+\item[$\bullet$] \textbf{dim} allows scaling data according to its dimension rank as a list of \textbf{norm} value by dimension.
+\end{itemize}
+\end{itemize}
+The key \texttt{:update} set to \textit{t} records the current settings of \glspl{scaling} in the history of the SOM and will be the default scaling settings. 
 

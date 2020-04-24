@@ -9,7 +9,7 @@
 
 \bigskip
 
-This code has been used to generate the illustrations of the figure \ref{fig:ex1} on page \pageref{fig:ex1} and its report is just about to give an idea about how to use N3 to mapping SOM and OSC protocol from N3 to SuperCollider -- mind that it works for limited SOM (100 neurons is fine -- that is to say $10\times10$), and
+This code has been used to generate the illustrations of the figure \ref{fig:ex1} on page \pageref{fig:ex1} and its report is just about to give an idea of how to map SOM in N3 and how to manage OSC protocol from N3 to SuperCollider -- mind that it works for limited SOM (100 neurons is fine -- that is to say $10\times10$), and
 \textit{in fine}, the use of a graphical software like Processing\footnote{\href{https://processing.org/}{\texttt{\scriptsize https://processing.org/}}} will be more appropriate to display more complex configuration.
 
 \bigskip
@@ -19,7 +19,7 @@ This code has been used to generate the illustrations of the figure \ref{fig:ex1
 (create-mlt 'COLOR 3 100 :carte #'quadrare) 
 ;; or :carte #'rnd-map
 
-;; to keep track of the initial value
+;; hack to keep track of the initial value
 (dolist (e (neurons-list COLOR)) 
    (setf (synapses-list e) (output e)))
 
@@ -28,9 +28,8 @@ This code has been used to generate the illustrations of the figure \ref{fig:ex1
 ;   (lambda* (a b) (euclidean a b :position t :modulo t)))
 
 (let ((num 3000) ;;  5 minutes with *latency* = 0.1
-      (dataset (scaling
-         (loop for i in (neurons-list COLOR) 
-            collect (synapses-list i)) :mlt COLOR))
+      (dataset (loop for i in (neurons-list COLOR) 
+                 collect (synapses-list i)))
       (initial-learning-rate 0.1)
       (initial-radius (/ (funcall #'mean 
          (list! (field COLOR))) 2))
@@ -77,10 +76,7 @@ o = OSCFunc({ arg msg, time, addr, recvPort;
 						data[i][3], 
 						data[i][4]);
 	//Pen.addOval(Rect(data[i][0]*b, data[i][1]*b, b/2, b/2));
-					Pen.addRect(Rect(
-						data[i][0]*b, 
-						data[i][1]*b, 
-						b, b));
+	Pen.addRect(Rect(data[i][0]*b, data[i][1]*b, b, b));
 					Pen.perform(\fill);
 				});
 			};

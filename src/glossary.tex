@@ -207,15 +207,15 @@
 	plural={\texttt{mapping}},
 	description={
 	\texttt{self}\myuline{[som]} \texttt{iteration}\myuline{[int]} \texttt{dataset}\myuline{[list]}
-	\\ \textsl{{\&}key} \texttt{init-lr}\myuline{[num]} \texttt{end-lr}\myuline{[num]} \texttt{init-rad}\myuline{[num]} \texttt{end-rad}\myuline{[num]} \\ \texttt{dfun}\myuline{[function]} \texttt{dtype}\myuline{[keyword]}
+	\\ \textsl{{\&}key} \texttt{init-lr}\myuline{[num]} \texttt{end-lr}\myuline{[num]} \texttt{init-rad}\myuline{[num]} \texttt{end-rad}\myuline{[num]} \\ \texttt{df}\myuline{[function]} \texttt{ds}\myuline{[list]}
 	\\ $\rightarrow$ \textit{No value} 
 	\vspace{2mm} 
 	\\ \texttt{:init-lr} -- Initial \texttt{learning-rate} (0.1 by default).
 	\\ \texttt{:end-lr} -- Final \texttt{learning-rate} (0.01 by default).
 	\\ \texttt{:init-rad} -- Initial \texttt{radius} (the default value is the mean value of the \texttt{field} of \textit{self} divided by 2).
 	\\ \texttt{:end-rad} -- Final \texttt{radius} (0.1 by default).
-	\\ \texttt{:dfun} -- Decreasing function (\glspl{exp-decay} by default).
-	\\ \texttt{:dtype} -- Normalisation type applied to the \textit{dataset} (see description of the key \texttt{:data-type} within the function \glspl{scaling}). ..}\bigskip
+	\\ \texttt{:df} -- Decreasing function (\glspl{exp-decay} by default).
+	\\ \texttt{:ds} -- Set \glspl{scaling} key(s) as a list of pair(s) keyword+value. ..}\bigskip
 	}
 	
 \newglossaryentry{net-menu}{
@@ -287,11 +287,12 @@
 	plural={\texttt{scaling}},
 	description={
 	\texttt{data}\myuline{[num$|$list]}
-	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{mlt}\myuline{[mlt]} \\ \texttt{data-type}\myuline{[keyword]}
+	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{curve}\myuline{[num]} \\ \texttt{mlt}\myuline{[mlt]} \texttt{norm}\myuline{[list$|$num]} \texttt{dim}\myuline{[list$|$num]} \texttt{bypass}\myuline{[bool]} \texttt{update}\myuline{[bool]}
 	\\ $\rightarrow$ \textit{num}$|$\textit{list}  
-	\vspace{2mm} \\ Normalize \textit{data} value(s) occuring between \texttt{:minin} and \texttt{:minout} -- as minimal and maximal values of the dataset by default -- within the interval \texttt{:minout} and \texttt{:maxout}, respectively $0$ and $1$ by default.  
-	\\ \texttt{:mlt} -- Allows to retrieve initial data values or to keep track of the data range according to the MLT as this value. In that case, only the default values of keys are taken into account except the key \textit{data-type} if it is specified. 
-	\\ \texttt{:data-type} -- Specify the normalisation type (store in the slot \texttt{data-scale} of the key \textit{mlt}) such as by dimension \texttt{:dim} (set as a list of intervals), only 0/1 values \texttt{:bin} (set as 0), by event \texttt{:std} (set as 1) or according to all values of \textit{data} \texttt{:flat} (set as an interval). If this key is not specified, the normalisation is done according to \texttt{data-scale}. If the latter is \textit{nil}, then the default key value will be set as \texttt{:flat}.  ..}\bigskip
+	\vspace{2mm} \\ Normalize \textit{data} value(s) occuring between \textit{minin} and \textit{minout} -- as minimal and maximal values of the dataset by default -- within the interval \textit{minout} and \textit{maxout}, respectively $0$ and $1$ by default.  
+	\\ \texttt{:curve} -- Map \textit{data} from a curve-exponential input range (set to $0$ -- namely linear -- by default). 
+	\\ \texttt{:mlt} -- Allows to retrieve initial data values or to keep track of the data range of MLT (last setting by default) according to the interpretation of the input data in terms of type defined by the keys \textit{norm} or \textit{dim}.
+	\\ The key \textit{update} allows recording this new setting.  ..}\bigskip
 	}
 
 \newglossaryentry{send-udp}{
