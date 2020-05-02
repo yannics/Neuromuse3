@@ -109,10 +109,8 @@ Let the following procedure be an illustration of the principle of the learning 
 
 \begin{lstlisting}[language=N3]
 ;; Create AREA
-(create-mlt 'SOMNAME1 116 100 :carte #'quadrare
-   :n-fanaux 8)
-(create-mlt 'SOMNAME2 5 100 :carte #'quadrare 
-   :n-fanaux 8)
+(create-mlt 'SOMNAME1 116 100 :carte #'quadrare)
+(create-mlt 'SOMNAME2 5 100 :carte #'quadrare )
    ...
 (create-area 'AREANAME (list SOMNAME1 SOMNAME2 ...))
 
@@ -125,10 +123,12 @@ Let the following procedure be an illustration of the principle of the learning 
    for kv in '((keyword val ...) ...) 
    ;; ------------------
    do
+   ;; if needed
    (setf (distance-in (id i))
 	   (lambda* (a b) (euclidean a b :position t :modulo t)))
+   ;; ------------------
    (mapping (id i) 50000 (read-data (id i) data) :ds kv))
-     
+       
 ;; Learn the sequence `in time'.
 (learn AREANAME :seq '("~/dat1" "~/dat2" ...))
 \end{lstlisting}
@@ -154,6 +154,13 @@ Note that each element of the sequence can be a path as a string or as a pathnam
 \item[$\bullet$]  the learning at the AREA level consists to activate the current clique (via \textit{microcolonnes} activation) in order to record it as arcs. At the same time, each MLT records arcs and \textit{tournois} connected to the previous clique. 
 \end{itemize}}
 
+\setlength{\textfloatsep}{5pt}
+
+Before launching the learning process of the AREA, it is necessary to set the \texttt{fanaux-list} 
+either \textit{a priori} with the key \texttt{n-fanaux} within the function \glspl{create-mlt} or \textit{a posteriori} with the function \glspl{update-fanaux}. In the last case, one can estimate the optimum number of \textit{fanaux} according to the user cons-traint(s) by computing the \glspl{dendrogram}. Then \texttt{(open-graph *tree*)} allows displaying the corresponding curve as the sum of the intra-class inertia by trimming with lines as peaks of the curve meaning the minimum distance from the parent node (as the second number in the square bracket, the first number is the number of classes at this point) -- note that in the graph, the impulse segments are displayed in a logarithmic scale for better readability. At this point, the approach is rather empirical, but it should be done once and for all.
+
+\bigskip
+\bigskip
 
 \noindent {\large \textbf{About scaling}}
 \label{pt:as}
@@ -162,14 +169,14 @@ Note that each element of the sequence can be a path as a string or as a pathnam
 
 The bias in N3 is to normalise the input data in order to fit in a range between 0 and 1. The function \glspl{scaling} allows managing any input data according to some modalities applied at the SOM level (key \texttt{:mlt}). By default, the `data-scale' is bypassed. Then, to initiate or to interpret the data inputs, one needs to consider the following parameters:
 \begin{itemize}
-\item[] \myuline{the range} which is estimated by default between the minimal value and the maximal value of the dataset (any other values outside the range will be clipped);
-\item[] \myuline{the curve} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
+\item[] \myuline{\textbf{the range}} which is estimated by default between the minimal value and the maximal value of the dataset (any other values outside the range will be clipped);
+\item[] \myuline{\textbf{the curve}} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
 %source: https://github.com/supercollider/supercollider/blob/develop/SCClassLibrary/Common/Math/SimpleNumber.sc
 $$dataOut=\frac{(dataIn-inMin)(outMax-outMin)}{inMax-inMin}+outMin$$
 and if the input data $< 0$ (concave, negatively curved as exponential scale with the value $1-e$) or $> 0$ (convex, positively curved as a logarithmic scale with the value $e-1$) then:
 $$dataOut=ln\left(\dfrac{b-dataIn}{a}\right)\dfrac{outMax-outMin}{curve}+outMin$$
-with $b=inMin+a$,  $a=\dfrac{inMax-inMin}{1-grow}$ and $grow=e^{curve}$ -- with a limited value such as the curve should be set between +18 and -16 to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
-\item[] \myuline{the type} of the data input as:
+$$\text{with } b=inMin+a \text{ and }  a=\dfrac{inMax-inMin}{1-e^{curve}}$$ the value of the curve should be set between +18 and -16 to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
+\item[] \myuline{\textbf{the type}} of the data input as:
 \begin{itemize}
 \item[$\bullet$] \textbf{norm} valid for all numbers, the argument is the range as a list with `minval' and `maxval' plus optionally the value of the curve (0 by default), or a number as the curve value; %if the range is known;
 \item[$\bullet$] \textbf{dim} allows scaling data according to its dimension rank as a list of \textbf{norm} value by dimension.
