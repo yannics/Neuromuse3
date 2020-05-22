@@ -175,7 +175,7 @@ The bias in N3 is to normalise the input data in order to fit in a range between
 $$dataOut=\frac{(dataIn-inMin)(outMax-outMin)}{inMax-inMin}+outMin$$
 and if the input data $< 0$ (concave, negatively curved as exponential scale with the value $1-e$) or $> 0$ (convex, positively curved as a logarithmic scale with the value $e-1$) then:
 $$dataOut=ln\left(\dfrac{b-dataIn}{a}\right)\dfrac{outMax-outMin}{curve}+outMin$$
-$$\text{with } b=inMin+a \text{ and }  a=\dfrac{inMax-inMin}{1-e^{curve}}$$ the value of the curve should be set between +18 and -16 to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
+$$\text{with } b=inMin+a \text{ and }  a=\dfrac{inMax-inMin}{1-e^{curve}}$$ the value of the curve should be set between $+18$ and $-16$ to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
 \item[] \myuline{\textbf{the type}} of the data input as:
 \begin{itemize}
 \item[$\bullet$] \textbf{norm} valid for all numbers, the argument is the range as a list with `minval' and `maxval' plus optionally the value of the curve (0 by default), or a number as the curve value; %if the range is known;

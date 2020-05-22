@@ -10,7 +10,16 @@
 \usepackage{tocloft}
 
 \usepackage{amsmath}
+%\usepackage{fnpct}
+\let\oldFootnote\footnote
+\newcommand\nextToken\relax
 
+\renewcommand\footnote[1]{%
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+
+\newcommand\isFootnote{%
+    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+    
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -70,11 +79,13 @@
     escapechar={\@, \#},
     morecomment=[s][\color{violet!80}]{\ *}{*},
     morekeywords=[2]{NEUROMUSE3, INTRODUCTION,  PRESENTATION, SELF, ORGANIZING, MAP, TOPOLOGY, HIERACHICAL, CLUSTERING, SHORT-TERM, LONG-TERM, MEMORY, BIBLIOGRAPHY, DEVELOPMENTAL, LEARNING, DOCUMENTATION, REFERENCES, SEQUENCING, INDEX, CLIQUE, TOURNOI, PROLEGOMENA, ANNEX, APOSTIL},
+    morekeywords=[3]{NIL},
     commentstyle=\color{black!50},
     numberstyle=\color{white},
     stringstyle=\color{darkgray},
     basicstyle=\ttfamily\normalsize,
-    keywordstyle=[2]\color{orange}
+    keywordstyle=[2]\color{orange},
+    keywordstyle=[3]\color{violet!50}
 }
 \usepackage{setspace}
 \usepackage{wrapfig}
@@ -115,10 +126,12 @@ title=\bfseries\sffamily NOTE
 CL-USER> (require package 'NEUROMUSE3)
 loaded: FOSC|OSC
 loaded: NEUROMUSE3
+NIL
 CL-USER> (in-package :N3)
 #<PACKAGE "N3">
 N3> (version)
 3.0.9
+NIL
 N3>
 \end{lstlisting}
 %loaded: SB-BSD-SOCKETS
@@ -132,9 +145,9 @@ computers seem to `think'. In fact, they are highly specialized at present, and 
 makes for consciousness. Obviously, they can be made to simulate the process of consciousness, just as our electric global networks now begin to simulate the condition of our central nervous system. But a conscious computer would still be one that was an extension of our consciousness.''
 \end{chapquote}
 
-\bigskip
 \begin{spacing}{0.1}
-
+\bigskip
+%\bigskip
 \renewcommand*\contentsname{Contents}
 \tableofcontents
 \end{spacing}
