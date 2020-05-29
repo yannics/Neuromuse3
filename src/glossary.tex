@@ -95,6 +95,17 @@
 	 ..}\bigskip
 	}
 	
+\newglossaryentry{differential-vector}{
+	name={\texttt{DIFFERENTIAL-VECTOR}},
+     plural={\texttt{differential-vector}},
+	description={
+	\texttt{xs/l1}\myuline{[list]} \texttt{xs/l2}\myuline{[list]} 
+	\\ \textsl{{\&}key} \texttt{result}\myuline{[keyword]} \texttt{opt}\myuline{[keyword]} \texttt{thres}\myuline{[num]} \texttt{ended}\myuline{[keyword]} \\ \texttt{cluster}\myuline{[keyword]} \texttt{tolerance}\myuline{[keyword]}
+	\\ $\rightarrow$ \textit{num}  
+	\vspace{2mm} \\ {\small \texttt{(documentation 'differential-vector 'function)}} \\
+	See also Chapter 5 \textsl{Motivic Recognition} in \textsl{Journal of Generative Sonic Art} \citep{yi}. ..}\bigskip
+	}	
+		
 \newglossaryentry{euclidean}{
 	name={\texttt{EUCLIDEAN}},
      plural={\texttt{euclidean}},
@@ -234,8 +245,8 @@
 	\\ $\rightarrow$ \textit{sym}$|$\textit{int}
 	\vspace{2mm} \\  Estimate from probabilities -- according to the function defined by the key \textit{compute} -- the occurrence of an event after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) temporally ordered when \textit{self} is respectively MLT or AREA.
 	\\ The key \texttt{:result} takes as argument:
-	\\ \texttt{:compute} by default or,
-	\\ \texttt{:list} as an ordered list of probabilities or,
+	\\ \texttt{:eval} by default or,
+	\\ \texttt{:prob} as an ordered list of probabilities or,
 	\\ \texttt{:verbose} to display the probabilities. ..}\bigskip
 	}
 	
