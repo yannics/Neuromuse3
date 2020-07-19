@@ -53,8 +53,8 @@ All microcolonnes whose connection number is equal to the number of known elemen
 
 Thus, we obtain a list of potential cliques ordered according to their respective weights in terms of probability. 
 
-\newpage
-\begin{figure}[htbp]
+%\newpage
+\begin{figure}[h]
 \begin{center}
 \includegraphics[width=9cm]{2701}
 \caption[Cliques estimation on a network AREA (partial view) composed of four SOM of five \textit{fanaux}.]{Cliques estimation on a network AREA (partial view\protect\footnotemark) composed of four SOM of five \textit{fanaux}.}
@@ -83,7 +83,7 @@ As seen before in the part 3 \textsl{Short-Term Memory}, it is possible at the A
 To estimate the weight of a potential clique -- as for the \textit{tournoi} (except with remanence) -- one takes the mean value of the weights of all edges constituting such clique or \textit{tournoi}. 
 
 \smallskip
-\newpage
+%\newpage
 Concerning the remanence at the AREA level, the probability for a given clique is done according to the previous cliques in terms of \textit{tournois} (also with remanence) as:
 
 $$P_{C(T)} = \displaystyle \prod_{i \in SL} P(E_{n_i}|E_{p_i})$$
@@ -170,6 +170,8 @@ either \textit{a priori} with the key \texttt{n-fanaux} within the function \gls
 The bias in N3 is to normalise the input data in order to fit in a range between 0 and 1. The function \glspl{scaling} allows managing any input data according to some modalities applied at the SOM level (key \texttt{:mlt}). By default, the `data-scale' is bypassed. Then, to initiate or to interpret the data inputs, one needs to consider the following parameters:
 \begin{itemize}
 \item[] \myuline{\textbf{the range}} which is estimated by default between the minimal value and the maximal value of the dataset (any other values outside the range will be clipped);
+\newpage
+
 \item[] \myuline{\textbf{the curve}} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
 %source: https://github.com/supercollider/supercollider/blob/develop/SCClassLibrary/Common/Math/SimpleNumber.sc
 $$dataOut=\frac{(dataIn-inMin)(outMax-outMin)}{inMax-inMin}+outMin$$
