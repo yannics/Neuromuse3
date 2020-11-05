@@ -85,13 +85,13 @@
 	plural={\texttt{dendrogram}},
 	description={
 	\texttt{self}\myuline{[som$|$mlt$|$list]} \texttt{aggregation}\myuline{[int]} 
-	\\ \textsl{{\&}key} \texttt{diss-fun}\myuline{[function]} \texttt{newick}\myuline{[bool]} \texttt{with-label}\myuline{[bool]} \texttt{and-data}\myuline{[bool]} 
+	\\ \textsl{{\&}key} \texttt{diss-fun}\myuline{[function]} \texttt{newick}\myuline{[bool]} \texttt{with-label}\myuline{[bool]} \texttt{and-data}\myuline{[bool$|$list]} 
 	\\ $\rightarrow$ \textit{node} 
 	\vspace{2mm} \\ Compute the hierarchical clustering of \textit{self} using one of the following aggregation method: single linkage (1), complete linkage (2) and Ward's method (3).
 	\\ \texttt{:diss-fun} -- Function (if lambda function then arguments are (\texttt{a}) and (\texttt{b}) as two items to compare).  
 	\\ \texttt{:newick} -- Save \textit{newick} file (set by default).
 	\\ \texttt{:with-label} -- Display on the dendrogram the label of all nodes (by default only leaves are labelised).
-	\\ \texttt{:and-data} -- Write data file with for each line the \myuline{number of classes} according to the \myuline{minimal distance} of the parent node and the sum of all \myuline{intra-class inertia}.
+	\\ \texttt{:and-data} -- Allows to integrate a bijective alist of symbol or string relative to the input data as a list and/or write tree file. In the SOM context, write data file -- in addition to the tree file -- with for each line the \myuline{number of classes} according to the \myuline{minimal distance} of the parent node and the sum of all \myuline{intra-class inertia}. 
 	 ..}\bigskip
 	}
 	

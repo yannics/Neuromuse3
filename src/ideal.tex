@@ -1,12 +1,9 @@
-Project launched in October 2014 by Olivier Georgeon on the internet platform MOOC\footnote{\href{http://liris.cnrs.fr/ideal/mooc/}{\texttt{\scriptsize http://liris.cnrs.fr/ideal/mooc/}}} consisting of learning and developing a new concept in artificial intelligence called IDEAL (\textbf{I}mplementation of \textbf{DE}velopment\textbf{A}l \textbf{L}earning) -- defined as an ``approach to simulate the early mechanisms of emergent cognition based on theories of enactive cognition and on constructivist epistemology'' \citep{ger}.
+Project launched in October 2014 by Olivier Georgeon on the internet platform MOOC\footnote{\href{http://liris.cnrs.fr/ideal/mooc/}{\texttt{\scriptsize http://liris.cnrs.fr/ideal/mooc/}}\label{noteideal}} consisting of learning and developing a new concept in artificial intelligence called IDEAL (\textbf{I}mplementation of \textbf{DE}velopment\textbf{A}l \textbf{L}earning) -- defined as an ``approach to simulate the early mechanisms of emergent cognition based on theories of enactive cognition and on constructivist epistemology'' \citep{ger}.
 
 \begin{wrapfigure}{r}{0.35\textwidth}
-%  \vspace{-25pt}
-%   \hspace{-5pt} 
 \vspace{-5pt}
    \hspace{-5pt} 
    \includegraphics[width=0.35\textwidth]{2345}
-  %\caption{...}
   \vspace{-20pt}
 \end{wrapfigure}
 
@@ -23,6 +20,30 @@ Thus, each agent develops its own understanding of its environment -- i.e. an on
 Also, IDEAL implies non-ontological interactional presuppositions -- the ontological aspect will be defined by the agent as it experiences its interaction with the environment.
 
 \bigskip
+
+With that in mind, the following short description as paragraphs should help the understanding of the different concepts and processes used in this AI context.
+
+\begin{enumerate}[leftmargin=0cm,itemindent=.5cm,labelwidth=\itemindent,labelsep=0cm,align=left]
+\item There is \myuline{no a priori knowledge} of the environment. 
+
+\smallskip
+
+`\textit{It allows us to specify inborn behavioral preferences without specifying a predefined goal.}' [$\rightarrow$ \href{https://projet.liris.cnrs.fr/ideal/mooc/lesson.php?n=041}{41. Introduction}, Georgeon, 2014, \textit{loc. cit.} note \ref{noteideal}]
+
+\smallskip
+
+In other words, only primitive interactions -- i.e. innate -- are defined through the initial function, which can evolve over time through the function \texttt{agent-result}. 
+
+\smallskip
+
+`\textit{This design choice follows from constructivist epistemology which suggests that sensorimotor patterns of interaction constitute the basic elements from which the agent constructs knowledge of the world.}' [$\rightarrow$ \href{https://projet.liris.cnrs.fr/ideal/mooc/lesson.php?n=043}{43. Architecture}, Georgeon, 2014, \textit{ibid.}] 
+
+\smallskip
+
+The environment is therefore understood by the AI in terms of reading/writing relevant informations through neurons stimulation device and can be managed by programming constraints.
+\end{enumerate}
+
+\bigskip
 \bigskip
 
 \noindent {\large \textbf{Glossary}}
@@ -32,62 +53,11 @@ Also, IDEAL implies non-ontological interactional presuppositions -- the ontolog
 Abbreviations: \textsl{fr.} = French; \textsl{acc.} = \textit{acception}.
 
 \begin{description}
+\item[Abstract]: is an experiment or a result which refer to an interaction.
 \item[Enaction]: interaction with the environment.
-\item[Proclivity]: [\textsl{fr}. \textit{propension}] inner, innate, natural force, which directs spontaneously or voluntarily towards an action, a behavior.
+\item[Primitive]: low-level interaction defined by the couple experiment/result.\item[Proclivity]: [\textsl{fr}. \textit{propension}] inner, innate, natural force, which directs spontaneously or voluntarily towards an action, a behavior.
 \item[Valence]:  [\textsl{acc.} psychology] refers to the intrinsically pleasant or unpleasant quality of a stimulus or situation.
 \end{description}
-
-\bigskip
-
- \begin{notes}
-%Developmental Artificial Intelligence. Lesson 1/4
-%
-%\href{https://www.youtube.com/watch?v=aQWnx1PX7-w}{\texttt{\scriptsize https://www.youtube.com/watch?v=aQWnx1PX7-w}}
-
-%Developmental Artificial Intelligence. Lesson 2/4
-%
-%\href{https://www.youtube.com/watch?v=5AnDYmEAF5I}{\texttt{\scriptsize https://www.youtube.com/watch?v=5AnDYmEAF5I}}
-%
-%Developmental Artificial Intelligence. Lesson 3/4
-%
-%\href{https://www.youtube.com/watch?v=iM7j2a3pLNk}{\texttt{\scriptsize https://www.youtube.com/watch?v=iM7j2a3pLNk}}
-%
-%Developmental Artificial Intelligence. Lesson 4/4
-%
-%\href{https://www.youtube.com/watch?v=v6YXon6Y4iU}{\texttt{\scriptsize https://www.youtube.com/watch?v=v6YXon6Y4iU}}
-
-%\vfill\hfill\smash{\raisebox{5pt}{\includegraphics[width=2cm,height=2cm]{1223}}} 
-
-{\large \textbf{Summary description}}
-
-\begin{description}
-\item[\texttt{E010}] 
-When the expected or desired result is effective, according to the conditions of \texttt{result010}, the qualitative character self-satisfied is `activated' (frustrated otherwise). After $n$ identical, similar, equivalent or other interactions, this is the bored character that is activated, and the system look for another experience to avoid `boredom'.
-
-\item[\texttt{E020}]
-The character is quantified with the valence expressing the motivation. This is applied to the primitive interactions.
-
-\quad -- valence $\geq 0 \Rightarrow$ pleased
-
-\quad -- valence $< 0 \Rightarrow$ pained
-
-\item[\texttt{E030}]
-Continuation of \texttt{E020} including composite interactions (indeed first level abstractions).
-
-%[\texttt{E020} and \texttt{E030} could imply a fractal dispersion toward the macroscopic ... i.e. a demonstrable influence in terms of fractality on composite interactions and abstractions.]
-
-\item[\texttt{E031}]
-Variation of \texttt{E030} involving weights in terms of proclivity.
-
-%\item[\texttt{E040}]
-
-%Arbre binaire entier et nombre de Catalan
-%Un arbre binaire entier est un arbre dont chaque nœud possède zéro ou deux fils.
-%Le nombre de Catalan est le nombre d'arbres binaire entier que l'on peut construire avec n éléments.
-%Ce nombre est définit par la formule suivante: ...
-\end{description}
-
-\end{notes}
 
 \bigskip
 \bigskip
@@ -95,6 +65,7 @@ Variation of \texttt{E030} involving weights in terms of proclivity.
 \noindent {\large \textbf{Index}}
 
 \bigskip
+
 
 \begin{description}[font=\ttfamily]
 
@@ -127,3 +98,37 @@ Variation of \texttt{E030} involving weights in terms of proclivity.
 \item[SELECT-ANTICIPATE] \textit{<existence>} \textit{<experiment/interaction/null>} \\ From \textit{existence-interaction}(s), the evaluation is an \textit{interaction}.
 
 \end{description}
+
+\bigskip
+\bigskip
+
+ \begin{notes}
+
+{\large \textbf{Summary description}}
+
+\begin{description}
+\item[\texttt{E010}] 
+When the expected or desired result is effective, according to the conditions of \texttt{result010}, the qualitative character self-satisfied is `activated' (frustrated otherwise). After $n$ identical, similar, equivalent or other interactions, this is the bored character that is activated, and the system look for another experience to avoid `boredom'.
+
+\item[\texttt{E020}]
+The character is quantified with the valence expressing the motivation. This is applied to the primitive interactions.
+
+\quad -- valence $\geq 0 \Rightarrow$ pleased
+
+\quad -- valence $< 0 \Rightarrow$ pained
+
+\item[\texttt{E030}]
+Continuation of \texttt{E020} including composite interactions -- i.e. first level abstractions.
+
+\item[\texttt{E031}]
+Variation of \texttt{E030} involving weights in terms of proclivity. 
+
+\mynoteuline{The proclivity is estimated as the product of the weight and the} \mynoteuline{valence of the considered interaction.}
+
+\end{description}
+
+\end{notes}
+
+
+
+
