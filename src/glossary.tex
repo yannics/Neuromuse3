@@ -110,8 +110,8 @@
 	name={\texttt{EUCLIDEAN}},
      plural={\texttt{euclidean}},
 	description={
-	\texttt{arg1}\myuline{[neuron$|$som$|$list$|$null]} \texttt{arg2}\myuline{[neuron$|$list$|$null]} 
-	\\ \textsl{{\&}key} \texttt{modulo}\myuline{[bool]} \texttt{position}\myuline{[bool]} \texttt{weight}\myuline{[num$|$list]}
+	\texttt{arg1}\myuline{[neuron$|$som$|$list$|$event]} \texttt{arg2}\myuline{[neuron$|$list$|$event]} 
+	\\ \textsl{{\&}key} \texttt{modulo}\myuline{[num$|$bool]} \texttt{position}\myuline{[bool]} \texttt{weight}\myuline{[num$|$list]}
 	\\ $\rightarrow$ \textit{num}  
 	\vspace{1mm} \\ ..}\bigskip
 	}
@@ -161,7 +161,7 @@
 	description={
 	\textsl{lambda-list}
 	\\ $\rightarrow$ \textit{function}  
-	\vspace{2mm} \\ Macro as a `normal' lambda function allowing to keep track of the `source code'. ..}\bigskip
+	\vspace{2mm} \\ Macro as a `normal' lambda function -- \myuline{but do not require to be call with \texttt{\#'}} -- allowing to keep track of the `source code'. ..}\bigskip
 	}
 	
 \newglossaryentry{learn}{
@@ -188,7 +188,7 @@
 	plural={\texttt{locate-clique}},
 	description={
 	\texttt{self}\myuline{[area]} \texttt{nodes}\myuline{[list]} 
-	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{test}\myuline{[function]}
+	\\ \textsl{{\&}key} \texttt{test}\myuline{[function]}
 	\\ $\rightarrow$ \textit{list}  
 	\vspace{2mm} \\ List of potential \textit{microcolonne}(s) constituting a clique from a partial list of node(s). ..}\bigskip
 	}
@@ -197,8 +197,8 @@
 	name={\texttt{LOCATE-CYCLE}},
 	plural={\texttt{locate-cycle}},
 	description={
-	\texttt{nodes}\myuline{[list$|$hash-table]}  
-	\\ \textsl{{\&}optional} \texttt{order}\myuline{[int]}	
+	\texttt{nodes}\myuline{[list$|$hash-table$|$mlt$|$area]}  
+	\\ \textsl{{\&}optional} \texttt{kw}\myuline{[keyword]} \texttt{order}\myuline{[int]}	
 	\\ $\rightarrow$ \textit{list}  
 	\vspace{2mm} \\ List all cycles from a list of edges. ..}\bigskip
 	}	
@@ -241,13 +241,18 @@
 	plural={\texttt{next-event-probability}},
 	description={
 	\texttt{head}\myuline{[list]} \texttt{self}\myuline{[list$|$mlt$|$area]} 
-	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{result}\myuline{[keyword]} \texttt{compute}\myuline{[function]}
-	\\ $\rightarrow$ \textit{sym}$|$\textit{int}
-	\vspace{2mm} \\  Estimate from probabilities -- according to the function defined by the key \textit{compute} -- the occurrence of an event after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) temporally ordered when \textit{self} is respectively MLT or AREA.
-	\\ The key \texttt{:result} takes as argument:
+	\\ \textsl{{\&}key} \texttt{remanence}\myuline{[bool]} \texttt{result}\myuline{[keyword]} \texttt{compute}\myuline{[function]} \\ \texttt{opt}\myuline{[keyword$|$list]}
+	\\ $\rightarrow$ ... %\textit{nil$|$sym}$|$\textit{int}
+	\vspace{2mm} \\  Estimate from probabilities -- and according to the function defined by the key \textit{compute} -- the occurrence of an event after a given subsequence of symbols when \textit{self} is a list of symbols or a list of index(es) \textit{microcolonnes(s)} or clique(s) -- when \textit{self} is respectively MLT or AREA-- temporally ordered.	\\ The key \texttt{:result} takes as argument:
 	\\ \texttt{:eval} by default or,
 	\\ \texttt{:prob} as an ordered list of probabilities or,
-	\\ \texttt{:verbose} to display the probabilities. ..}\bigskip
+	\\ \texttt{:verbose} to display the probabilities.
+	\\
+	\\ The key \texttt{:opt} in the context of --
+	\\ $\bullet$ AREA allows with the keyword \texttt{:onset} to evaluate a possible start according to the probability of an event as such and as the first occurrence of the onset of each SOM.  [$\rightarrow$ should be improved taking into account the weight of the onset]; and with the 
+keyword \texttt{:buffer} to evaluate the last event of the buffer according to its tail as remanence.
+	\\ $\bullet$ MLT allows to evaluate the next event among the list of expected events as argument.
+	 ..}\bigskip
 	}
 	
 \newglossaryentry{osc-listen}{
@@ -298,7 +303,7 @@
 	plural={\texttt{scaling}},
 	description={
 	\texttt{data}\myuline{[num$|$list]}
-	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{curve}\myuline{[num]} \\ \texttt{mlt}\myuline{[mlt]} \texttt{norm}\myuline{[list$|$num]} \texttt{dim}\myuline{[list$|$num]} \texttt{bypass}\myuline{[bool]} \texttt{update}\myuline{[bool]}
+	\\ \textsl{{\&}key} \texttt{minin}\myuline{[num]} \texttt{maxin}\myuline{[num]} \texttt{minout}\myuline{[num]} \texttt{maxout}\myuline{[num]} \texttt{curve}\myuline{[num]} \\ \texttt{mlt}\myuline{[mlt]} \texttt{norm}\myuline{[list$|$num]} \texttt{dim}\myuline{[list$|$num]} \texttt{bypass}\myuline{[bool$|$\{lambda*\}]} \\ \texttt{update}\myuline{[bool]}
 	\\ $\rightarrow$ \textit{num}$|$\textit{list}  
 	\vspace{2mm} \\ Normalize \textit{data} value(s) occuring between \textit{minin} and \textit{minout} -- as minimal and maximal values of the dataset by default -- within the interval \textit{minout} and \textit{maxout}, respectively $0$ and $1$ by default.  
 	\\ \texttt{:curve} -- Map \textit{data} from a curve-exponential input range (set to $0$ -- namely linear -- by default). 

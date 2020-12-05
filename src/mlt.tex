@@ -40,6 +40,7 @@ The (re-)construction is effective when a learned sequence can be retraced as re
 
 %\bigskip
 %\newpage
+
 The method \glspl{locate-clique} allows a first estimation of possible clique(s) according to two possible inputs:
 \begin{enumerate}
 \item isolated node(s): \texttt{((microcolonne\_indice colonne\_indice) …)}
@@ -80,11 +81,11 @@ As seen before in the part 3 \textsl{Short-Term Memory}, it is possible at the A
 
 \smallskip
 
-To estimate the weight of a potential clique -- as for the \textit{tournoi} (except with remanence) -- one takes the mean value of the weights of all edges constituting such clique or \textit{tournoi}. 
+To estimate the weight of a potential clique one takes the mean value of the weights of all edges constituting such clique. 
 
 \smallskip
 %\newpage
-Concerning the remanence at the AREA level, the probability for a given clique is done according to the previous cliques in terms of \textit{tournois} (also with remanence) as:
+At the AREA level, the probability for a given clique is done according to the previous cliques in terms of \textit{tournois} in relation to the remanence as:
 
 $$P_{C(T)} = \displaystyle \prod_{i \in SL} P(E_{n_i}|E_{p_i})$$
 
@@ -92,12 +93,13 @@ With $SL$ as the \texttt{soms-list}, $E_{n}$ as the next event -- in other words
 
 \smallskip
 
-Otherwise, this is the probabilities in terms of normalised weighted edges.
+Then the result is the product of the probability `in time' and the weight of the resultant clique. Note that \myuline{each probability is normalised}.
 
 \bigskip
 \bigskip
 
 \noindent {\large \textbf{AREA instantiation}}
+\label{arinst}
 
 \bigskip
 
@@ -130,7 +132,8 @@ Let the following procedure be an illustration of the principle of the learning 
    (mapping (id i) 50000 (read-data (id i) data) :ds kv))
        
 ;; Learn the sequence `in time'.
-(learn AREANAME :seq '("~/dat1" "~/dat2" ...))
+(learn AREANAME 
+:seq (read-data AREANAME '("~/dat1" "~/dat2" ...) :scale t))
 \end{lstlisting}
 
 \bigskip
@@ -170,7 +173,7 @@ either \textit{a priori} with the key \texttt{n-fanaux} within the function \gls
 The bias in N3 is to normalise the input data in order to fit in a range between 0 and 1. The function \glspl{scaling} allows managing any input data according to some modalities applied at the SOM level (key \texttt{:mlt}). By default, the `data-scale' is bypassed. Then, to initiate or to interpret the data inputs, one needs to consider the following parameters:
 \begin{itemize}
 \item[] \myuline{\textbf{the range}} which is estimated by default between the minimal value and the maximal value of the dataset (any other values outside the range will be clipped);
-\newpage
+%\newpage
 
 \item[] \myuline{\textbf{the curve}} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
 %source: https://github.com/supercollider/supercollider/blob/develop/SCClassLibrary/Common/Math/SimpleNumber.sc
@@ -184,5 +187,19 @@ $$\text{with } b=inMin+a \text{ and }  a=\dfrac{inMax-inMin}{1-e^{curve}}$$ the 
 \item[$\bullet$] \textbf{dim} allows scaling data according to its dimension rank as a list of \textbf{norm} value by dimension.
 \end{itemize}
 \end{itemize}
-The key \texttt{:update} set to \textit{t} records the current settings of \glspl{scaling} in the history of the SOM and will be the default scaling settings. 
+The key \texttt{:update} set to \textit{t} records the current settings of \glspl{scaling} in the history of the SOM and will be the default scaling settings. This information can be read and set `externally'  as follow:
+
+\begin{lstlisting}[language=N3]
+;; read
+(the-ds SOMNAME)
+;; or
+(history SOMNAME)
+;; set
+(set-ds SOMNAME <key> <arg> ...)
+\end{lstlisting}
+
+\bigskip
+
+There is an alternative to scale or encode data for MLT -- meaning to set the key \texttt{:mlt} --, which requires the macro function \glspl{lambda*} as the argument of the key \texttt{:bypass}. Thus, any kind of data can be formatted in the respect of the number of input of the considered MLT as a list.  
+
 
