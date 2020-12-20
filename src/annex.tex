@@ -1,5 +1,4 @@
 %\bigskip
-
 %\noindent {\large \textbf{Displaying a learning process of a SOM through SuperCollider via OSC}}
 
 \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
@@ -85,4 +84,129 @@ o = OSCFunc({ arg msg, time, addr, recvPort;
     }.defer;
 }, '/N3-COLOR');
 )
+\end{lstlisting}
+
+\bigskip
+\bigskip
+
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\section{Markov chain AREA instance \\for real time Music processing}
+\label{ann:mcone}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+
+\subsection{Learning dataset -- rhizom-like network}
+
+\bigskip
+
+Let a corpus of partial sequences as MDS \citep{yi} -- Chapter 3 \textsl{Music Data Score} -- formatted as follow 
+\begin{lstlisting}[language=N3]
+(((seq1-dur_1 seq1-dur_2 ... seq1-dur_n) 
+  (seq1-midi_1 seq1-midi_2 ... seq1-midi_n)) 
+ ((seq2-dur_1 seq2-dur_2 ... seq2-dur_n) 
+  (seq2-midi_1 seq2-midi_2 ... seq2-midi_n)) 
+ ... 
+ ((seqN-dur_1 seqN-dur_2 ... seqN-dur_n) 
+  (seqN-midi_1 seqN-midi_2 ... seqN-midi_n)))
+  
+\end{lstlisting}
+ be the experience in the area network defined by cliques of order 3 --  i.e. one node for the duration of 8 units, one node for the degree in modulo 12 and one node concerning the interval in semi-tone with the next note between $-11$ and $+11$ corresponding to a total number of 23.
+\begin{lstlisting}[language=N3]
+(defparameter +corpus+ (loop for i in MDS collect 
+   (mat-trans (list 
+      (car i) 
+      (loop for x in (cadr i) collect (mod x 12)) 
+      (complist (x->dx (cadr i)) (car i) nil)))))
+\end{lstlisting}
+From this point, each sequence of the \texttt{+corpus+} looks like 
+\begin{lstlisting}[language=N3]
+((dur_1 deg_1 int_1) (dur_2 deg_2 int_2) 
+   ... (dur_n deg_n int_n))
+\end{lstlisting}
+ Let initiate the area network with this corpus thus formatted.
+\begin{lstlisting}[language=N3]
+(create-mlt 'CS-INT 23 100)
+(create-mlt 'CS-DEG 12 100)
+(create-mlt 'CS-DUR 8 100)
+(create-area 'CORPUS '(CS-DUR CS-DEG CS-INT))
+\end{lstlisting}
+As seen previously in this writting, the mapping is done for each SOM according to their respective scaling using \glspl{lambda*} function.
+\begin{lstlisting}[language=N3]
+(mapping CS-INT 5000 (loop for i from -11 to 11 collect i) 
+   :ds '(:bypass (lambda* (x) (>thrifty-code x 23 :mid 1)) 
+   :update t))
+(mapping CS-DEG 5000 (loop for i from 0 to 11 collect i) 
+   :ds '(:bypass (lambda* (x) (>thrifty-code (mod x 12) 12 
+      :left 0)) :update t))
+(mapping CS-DUR 5000 (loop for i from 1 to 8 collect i) 
+   :ds '(:bypass (lambda* (x) (>thrifty-code x 8 :right 1)) 
+   :update t))
+\end{lstlisting}
+Then initiate the fanaux list according to the discrimination number defined apriori. This can be understood as the perception limits of the AI. 
+\begin{lstlisting}[language=N3]
+(update-fanaux CS-INT (loop for i from -11 to 11 
+   collect (progn (setf (input CS-INT) 
+      (>thrifty-code i (nbre-input CS-INT) :mid 1)) 
+      (winner CS-INT))))
+(update-fanaux CS-DEG (loop for i from 0 to 11 
+   collect (progn (setf (input CS-DEG) 
+      (>thrifty-code i (nbre-input CS-DEG) :left 0)) 
+      (winner CS-DEG))))
+(update-fanaux CS-DUR (loop for i from 1 to 8 
+   collect (progn (setf (input CS-DUR) 
+      (>thrifty-code i (nbre-input CS-DUR) :right 1)) 
+      (winner CS-DUR))))
+\end{lstlisting}
+
+Make sure the discrimination is effective. 
+\begin{lstlisting}[language=N3]
+(loop for i from -11 to 11 collect 
+   (progn (setf (input CS-INT) 
+      (>thrifty-code i (nbre-input CS-INT) :mid 1)) 
+      (winner-take-all (output (id (winner CS-INT))))))
+(loop for i from 0 to 11 collect 
+   (progn (setf (input CS-DEG) 
+      (>thrifty-code i (nbre-input CS-DEG) :left 0)) 
+      (winner-take-all (output (id (winner CS-DEG))))))
+(loop for i from 1 to 8 collect 
+   (progn (setf (input CS-DUR) 
+      (>thrifty-code i (nbre-input CS-DUR) :right 1)) 
+      (winner-take-all (output (id (winner CS-DUR))))))
+\end{lstlisting}
+
+The learning process at the area level consists to record all connected nodes from the cliques to the tournois according to the \texttt{cover-value} as the short term memory. Knowing that components of the corpus are partial sequences, only the onset state is enable.
+\begin{lstlisting}[language=N3]
+(loop for seq in (mapcar #'mat-trans +corpus+)
+   do     
+     (set-all-zeros CORPUS :mode :onset)  
+     (loop
+	for i from 0 to (1- (length (car seq))) do
+	  (loop
+	     for s in (soms-list CORPUS)
+	     for d in seq do
+	       (setf (input (id s)) (scaling (nth i d) :mlt (id s))))
+	  (learn CORPUS))
+     ;(set-all-zeros CORPUS :mode :fine) 
+)
+\end{lstlisting}
+
+\subsection{Sequencing instantiation}
+
+\begin{lstlisting}[language=N3]
+;; works only on CCL64
+(create-sequencing
+ :net CORPUS
+ :dub '*voice1*
+ :remanence t
+ :pulse 0.25
+ :tag "N3"
+ :osc 7771
+ :rule (lambda* (prev) (declare (ignore prev)) 
+    (make-list (length (soms-list CORPUS)) 
+    :initial-element '?)))
+(set-routine *voice1* (markov-chain self (id (net self)) 
+   (dyn-buffer self)))
+;; ... and play
+(act-routine *voice1*)
+;; ... and stop
+(kill-routine *voice1*)
 \end{lstlisting}

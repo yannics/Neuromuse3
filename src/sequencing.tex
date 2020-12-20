@@ -1,3 +1,79 @@
+The sequencing is managed with the class of the same name described in the following table \ref{table:seq}. Each sequencing as an object is instantiated generating its own sequence with its own rule(s). Each parameter and function is accessible from the name or the `dub' (i.e. nickname) of this object leading to interact at any time with code or other sequencing instantiation.
+
+\bigskip
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabular}{r*1{c>{\ttfamily}l}cll}
+  &   & \normal{\head{Slot}} & \normal{\head{\hspace{2mm} Input}}
+  & \normal{\head{Note}} \\
+    \midrule
+  \multirow{19}{*}{SEQUENCING} 
+  &   & name & {\footnotesize SEQUENCING} &  \\
+  &  \faCog & dub & \textit{symbol}$|$\textit{string} & `nickname' \\
+  &  \faCog & description & \itshape string &   \\
+  &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
+  &   & buffer-in & \itshape list &  sync/listen input \\
+  &   & buffer-out & \itshape list &  sync/send output \\
+      &   & dyn-buffer & \itshape list &  dynamic `remanence' \\
+    &  \faCog & buffer-size & \itshape integer &  maximum size \\
+    &  \faCog & pattern & \itshape list &   \\
+  &  \faCog & pulse & \itshape number &  {\footnotesize relative duration factor}  \\
+      &  \faCog & sync & \itshape integer &   \\
+    &  \faCog & meter & \itshape number & time domain modulo  \\
+      &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
+        &  \faCog & odds & \textit{function} &  \\
+                  &  \faCog & rule & \itshape function & \textit{self} as argument  \\
+        &  \faCode & routine & \textit{function}$|$\textit{thread} & $\rightarrow$ \texttt{set-routine} \\
+        &   & offset & \itshape number &  \\
+  &   & counter & \itshape integer &   \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
+    &  \faCog & tag & \textit{symbol}$|$\textit{string} &   \\
+    &   & mem-cache & \itshape object &   \\
+\end{tabular}
+\caption{\label{table:seq}The sequencing class.}
+\end{table}
+
+\bigskip
+
+The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key arguments the remanence state and the odds function of the current sequencing --  according to the rule defined by the slot of the same name. 
+
+The rule predefines the event as a partial clique or event. This is a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self} -- in order to prepare the `dynamic buffer' for computation.
+ 
+Regarding the function(s) involve(s) in \texttt{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
+
+\bigskip
+\bigskip
+
+\noindent {\large \textbf{About synchronisation}}
+
+\bigskip
+
+First, some definitions in context:
+\begin{description}
+\item[\texttt{meter}] -- pattern of beats as the numerator of the time signature.
+\item[\texttt{+beat+}] -- tempo as the ratio of the previous beats defined by the \texttt{meter}, i.e. the duration in second of one beat as a global variable allowing to control globally the speed of the play.
+\item[\texttt{pulse}] -- minimal duration as the Least Common Multiple of the intended or expected rhythm.
+\item[\texttt{*latency*}] -- time step of the \texttt{+clock+} as $dt$ in second.
+\end{description}
+   
+   \smallskip
+   
+Note when the synchronisation is effective as a boolean or as a number, the pulsation is set according to the value of this number as the factor of the meter, or the nearest factor according to the value of pulse by default. Then, the real value of the pulse is the value of \texttt{(cdr (sync <sequencing>))}.  
+
+Hence the synchronisation is done on the modulo of the pulsation with respect to the meter.
+\begin{lstlisting}[language=N3]
+(mod 
+   (/ +clock+ 
+      (* (cdr (sync <sequencing>)) 
+         (/ +beat+ *latency*))) 
+   (meter <sequencing>))   
+\end{lstlisting}
+
+\bigskip
+\bigskip
+
 \noindent {\large \textbf{Dynamic Markov Chain}}
 
 \bigskip
@@ -6,4 +82,10 @@ See  4.7, 6.5.4 and 7.4 in \textsl{Journal of Generative Sonic Art} \citep{yi}. 
  
 See also code instance on the Annex \ref{ann:mcone} on page \pageref{ann:mcone}.
 
+%\bigskip
+%\bigskip
+%
+%\noindent {\large \textbf{Dynamic Cyclic Chain}}
+%
+%\bigskip
 

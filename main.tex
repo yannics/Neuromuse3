@@ -116,7 +116,7 @@ title=\bfseries\sffamily NOTE
 %\hfill\smash{\raisebox{-11pt}{\includegraphics[width=1cm,height=1cm]{1223}}} 
 , breakable]}%
 {\endtcolorbox}
-
+\newcommand*\rot{\rotatebox{90}}
 \begin{document}
 \input{listing}
 
@@ -128,13 +128,13 @@ title=\bfseries\sffamily NOTE
 ;************************************
 ; SLIME 2.20
 CL-USER> (require package 'NEUROMUSE3)
-loaded: FOSC|OSC
+loaded: OSC
 loaded: NEUROMUSE3
 NIL
 CL-USER> (in-package :N3)
 #<PACKAGE "N3">
 N3> (version)
-3.0.12
+3.0.13
 NIL
 N3>
 \end{lstlisting}
@@ -199,6 +199,7 @@ overestimates the `prophetic' power of the programmers to make the ultimate AI t
 \item AI is more a philosophical reflexion about our own functioning, our own understanding of the world than a modelisable reality.
 \item Probably the ultimate limitation of the AI is about `\textit{solution ontologique versus solution legislative}' \citep{cse}, Induction versus Deduction \citep{fxd}, Discrimination (`horizontal' qualitative estimation) versus  Discretisation (`vertical' quantitative analysis) and the paradigmatic context \citep{herz}.
 \item \textsl{``... if I had access to a human-level system I’d ask it for help in understanding the consequences for humanity of various policies about AI.''} \citep{jmc} p. 1181.
+\item AI is by definition empirical. Like any biological system, all tend to optimise their adaptive capacity. Any emergent behaviour is hence unpredictable insofar as this is dependant of the architecture and the experience of the system, the context and the nature of the situation that the system has to face.
 \end{enumerate}
 
 \newpage
@@ -328,9 +329,9 @@ N3>
   
     \midrule
  
-  \multirow{7}{*}{NEURON} 
-  &   & name & NEURON &  \\
-  &   & net & RNA &   \\
+  \multirow{8}{*}{NEURON} 
+  &   & name & {\footnotesize NEURON} &  \\
+  &   & net & {\footnotesize RNA} &   \\
   &   & xpos & \itshape list & as coordinates  \\
   &   & ind & \itshape integer & \texttt{neurons-list} index  \\
   &   & synapses-list & \itshape list  &   \\
@@ -341,7 +342,7 @@ N3>
     \midrule
 
 \multirow{12}{*}{RNA} 
-  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & SOM &  \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & {\footnotesize SOM} &  \\
   &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & nbre-neurons & \itshape integer &   \\
   &   & neurons-list & \itshape list &   \\
   & \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage}  & nbre-input & \itshape integer &   \\
@@ -350,26 +351,26 @@ N3>
   &  \faCog & learning-rate & \itshape number &   \\
   &   & date-report & \itshape hash-table  &  \\
   &   & epoch & \itshape integer &   \\
-  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &   \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &  {\footnotesize IP [string] + port(s) [integer]}  \\ 
   &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & daemons & \textit{thread}$|$\textit{list} &  \\
-  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & superdaemon & \textit{thread}$|$\textit{list} &   \\
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & superdaemon & \textit{bool}$|$\textit{object} &   \\
   
   \midrule
 
- \multirow{7}{*}{SOM} 
-  &   & neuron-gagnant & NEURON &  \\
+ \multirow{8}{*}{SOM} 
+  &   & neuron-gagnant & {\footnotesize NEURON} &  \\
   &  \faCog & distance-in & \itshape function &   \\
   &  \faCog & distance-out & \itshape function &   \\
   &  \faCog & voisinage & \itshape function &   \\
   & \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage}  & carte & \itshape function &  \\
   &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & field & \textit{number}$|$\textit{list} &  {\footnotesize if \textit{list} $\rightarrow||$\texttt{field}$||$ = \texttt{topology}} \\
   &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & topology & \itshape integer &   \\
-  &   & ghost & NEURON &   \\
+  &   & ghost & {\footnotesize NEURON} &   \\
  
   \midrule
   
-   \multirow{6}{*}{MLT} 
-  &   & net & AREA &  \\
+   \multirow{9}{*}{MLT} 
+  &   & net & {\footnotesize AREA} &  \\
   &  \faCode & fanaux-list & \itshape list & $\rightarrow$ \glspl{update-fanaux} \\
   & \faCode  & cover-value & \itshape integer & $\rightarrow$ \glspl{update-cover-value} \\
   &   & mct & \itshape list &   \\
@@ -382,7 +383,7 @@ N3>
   \midrule
   
    \multirow{8}{*}{AREA} 
-  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & AREA &  \\
+  &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & name & {\footnotesize AREA} &  \\
   &  \begin{minipage}{.023\textwidth}\includegraphics[width=\linewidth]{1124}\end{minipage} & soms-list & \itshape list &   \\
   &   & fanaux-length & \itshape integer &   \\
   &   & current-clique & \itshape list &   \\
@@ -547,7 +548,7 @@ Thanks for any support or contribution you could bring ...
 \bigskip 
 \bigskip
 
-%\newpage
+\newpage
 \centerline{\texttt{{\footnotesize ... to be continued ...}}}
 \begin{figure}[htbp]
 \begin{center}
