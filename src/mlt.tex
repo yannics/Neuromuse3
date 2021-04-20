@@ -178,7 +178,7 @@ The bias in N3 is to normalise the input data in order to fit in a range between
 \item[] \myuline{\textbf{the curve}} allows to set the scale of the input data such as if this value equal to 0 (linear) then: 
 %source: https://github.com/supercollider/supercollider/blob/develop/SCClassLibrary/Common/Math/SimpleNumber.sc
 $$dataOut=\frac{(dataIn-inMin)(outMax-outMin)}{inMax-inMin}+outMin$$
-and if the input data $< 0$ (concave, negatively curved as exponential scale with the value $1-e$) or $> 0$ (convex, positively curved as a logarithmic scale with the value $e-1$) then:
+and if this value $< 0$ (concave, negatively curved as exponential scale with the value $1-e$) or $> 0$ (convex, positively curved as a logarithmic scale with the value $e-1$) then:
 $$dataOut=ln\left(\dfrac{b-dataIn}{a}\right)\dfrac{outMax-outMin}{curve}+outMin$$
 $$\text{with } b=inMin+a \text{ and }  a=\dfrac{inMax-inMin}{1-e^{curve}}$$ the value of the curve should be set between $+18$ and $-16$\footnote{These are some empirical limit values and, these can be different depending on the operating system and the lisp implementation.} to avoid division by zero due to some rounding caused by computer systems about floating point numbers \citep{re};
 \item[] \myuline{\textbf{the type}} of the data input as:
