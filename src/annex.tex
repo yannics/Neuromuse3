@@ -110,6 +110,13 @@ o = OSCFunc({ arg msg, time, addr, recvPort;
 (create-mlt 'CS-DUR 8 100)
 (create-area 'CORPUS '(CS-DUR CS-DEG CS-INT))
 \end{lstlisting}
+Optionally set inner euclidean distance with modulo.
+\begin{lstlisting}[language=N3]
+(loop for i in (soms-list CORPUS) 
+   do 
+   (setf (distance-in (id i)) 
+     (lambda* (a b) (euclidean a b :position t :modulo t))))
+\end{lstlisting}
 As seen previously in this writting, the mapping is done for each SOM according to their respective scaling using \glspl{lambda*} function.
 \begin{lstlisting}[language=N3]
 (mapping CS-INT 5000 (loop for i from -11 to 11 collect i) 
