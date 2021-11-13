@@ -98,26 +98,7 @@ o = OSCFunc({ arg msg, time, addr, recvPort;
 
 \bigskip
 
-Let a corpus of partial sequences as MDS \citep{yi} -- Chapter 3 \textsl{Music Data Score} -- formatted as follow 
-\begin{lstlisting}[language=N3]
-(((seq1-dur_1 seq1-dur_2 ... seq1-dur_n) 
-  (seq1-midi_1 seq1-midi_2 ... seq1-midi_n)) 
- ((seq2-dur_1 seq2-dur_2 ... seq2-dur_n) 
-  (seq2-midi_1 seq2-midi_2 ... seq2-midi_n)) 
- ... 
- ((seqN-dur_1 seqN-dur_2 ... seqN-dur_n) 
-  (seqN-midi_1 seqN-midi_2 ... seqN-midi_n)))
-  
-\end{lstlisting}
- be the experience in the area network defined by cliques of order 3 --  i.e. one node for the duration of 8 units, one node for the degree in modulo 12 and one node concerning the interval in semi-tone with the next note between $-11$ and $+11$ corresponding to a total number of 23.
-\begin{lstlisting}[language=N3]
-(defparameter +corpus+ (loop for i in MDS collect 
-   (mat-trans (list 
-      (car i) 
-      (loop for x in (cadr i) collect (mod x 12)) 
-      (complist (x->dx (cadr i)) (car i) nil)))))
-\end{lstlisting}
-From this point, each sequence of the \texttt{+corpus+} looks like 
+\noindent According to the \texttt{+corpus+} such as each sequence is defined as follow:
 \begin{lstlisting}[language=N3]
 ((dur_1 deg_1 int_1) (dur_2 deg_2 int_2) 
    ... (dur_n deg_n int_n))
@@ -156,7 +137,6 @@ Then initiate the fanaux list according to the discrimination number defined apr
       (>thrifty-code i (nbre-input CS-DUR) :right 1)) 
       (winner CS-DUR))))
 \end{lstlisting}
-
 Make sure the discrimination is effective. 
 \begin{lstlisting}[language=N3]
 (loop for i from -11 to 11 collect 
@@ -172,21 +152,21 @@ Make sure the discrimination is effective.
       (>thrifty-code i (nbre-input CS-DUR) :right 1)) 
       (winner-take-all (output (id (winner CS-DUR))))))
 \end{lstlisting}
-
 The learning process at the area level consists to record all connected nodes from the cliques to the tournois according to the \texttt{cover-value} as the short term memory. Knowing that components of the corpus are partial sequences, only the onset state is enable.
 \begin{lstlisting}[language=N3]
 (loop for seq in (mapcar #'mat-trans +corpus+)
    do     
      (set-all-zeros CORPUS :mode :onset)  
      (loop
-	for i from 0 to (1- (length (car seq))) do
-	  (loop
-	     for s in (soms-list CORPUS)
-	     for d in seq do
-	       (setf (input (id s)) (scaling (nth i d) :mlt (id s))))
-	  (learn CORPUS))
-     ;(set-all-zeros CORPUS :mode :fine) 
-)
+	      for i from 0 to (1- (length (car seq))) 
+	      do
+	      (loop
+	        for s in (soms-list CORPUS)
+	        for d in seq do
+	        (setf (input (id s)) 
+	              (scaling (nth i d) :mlt (id s))))
+	      (learn CORPUS))
+     (set-all-zeros CORPUS :mode :fine))
 \end{lstlisting}
 
 \subsection{Sequencing instantiation}
