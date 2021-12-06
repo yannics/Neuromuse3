@@ -1,6 +1,20 @@
-The sequencing is managed with the class of the same name described in the following table \ref{table:seq}. Each sequencing as an object is instantiated generating its own sequence with its own rule(s). Each parameter and function is accessible from the name or the `dub' (i.e. nickname) of this object leading to interact at any time with code or other sequencing instantiation.
+ \begin{notes}
+
+{\large \textbf{Important}}
+
+For now, threading in sequencing works only under Clozure CL 1.12.1
+
+\end{notes}
 
 \bigskip
+
+The sequencing is managed with the class of the same name described in the following table \ref{table:seq}. Each sequencing as an object is instantiated generating its own sequence with its own rule(s). Each parameter and function is accessible from the name or the `dub' (i.e. nickname) of this object leading to interact at any time with code or other sequencing instantiation.
+
+\smallskip
+
+The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name. 
+
+\bigskip 
 
 \begin{table}[ht]
 \small
@@ -24,28 +38,33 @@ The sequencing is managed with the class of the same name described in the follo
     &  \faCog & meter & \itshape number & time domain modulo  \\
       &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
         &  \faCog & odds & \textit{function} &  \\
-                  &  \faCog & rule & \itshape function & \textit{self} as argument  \\
-        &  \faCode & routine & \textit{function}$|$\textit{thread} & $\rightarrow$ \texttt{set-routine} \\
+                  &  \faCode & rule & \itshape function & $\rightarrow$ \texttt{set-rule}  \\
+        &  \faCode & routine & \textit{function} & $\rightarrow$ \texttt{set-routine} \\
+        &   & outset & \itshape boolean &  \\
         &   & offset & \itshape number &  \\
   &   & counter & \itshape integer &   \\
   &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
     &  \faCog & tag & \textit{symbol}$|$\textit{string} &   \\
-    &   & mem-cache & \itshape object &   \\
+    &   & mem-cache & \itshape hash-table &   \\
 \end{tabular}
 \caption{\label{table:seq}The sequencing class.}
 \end{table}
 
-\bigskip
+\smallskip
 
-The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key arguments the remanence state and the odds function of the current sequencing --  according to the rule defined by the slot of the same name. 
+The rule predefines the event as a partial clique or event. The rule(s) is(are) embedded in a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self}.
 
-The rule predefines the event as a partial clique or event. This is a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self} -- in order to prepare the `dynamic buffer' for computation.
+\smallskip
  
 Regarding the function(s) involve(s) in \texttt{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
 
-\bigskip
-\bigskip
+\smallskip
 
+Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the dyn-buffer and the out-buffer according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffers involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
+%\bigskip
+%\bigskip
+
+\newpage
 \noindent {\large \textbf{About synchronisation}}
 
 \bigskip
