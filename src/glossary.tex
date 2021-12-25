@@ -1,5 +1,5 @@
 %===============================================================
-%% $ makeglossaries "n3"
+%% $ makeglossaries "main"
 %\newglossaryentry{*}{
 %	name={*},
 %	%sort={a},
@@ -18,6 +18,14 @@
 \newglossaryentry{*all-area*}{
 	name={\texttt{*ALL-AREA*}},
 	plural={\texttt{*all-area*}},
+	description={
+	$\rightarrow$ \textit{list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}	
+	
+\newglossaryentry{*all-sequencing*}{
+	name={\texttt{*ALL-SEQUENCING*}},
+	plural={\texttt{*all-sequencing*}},
 	description={
 	$\rightarrow$ \textit{list}  
 	\vspace{1mm} \\ ..}\bigskip
@@ -47,6 +55,15 @@
 	\vspace{2mm} \\ Last node built as root with \glspl{dendrogram}. ..}\bigskip
 	}
 	
+\newglossaryentry{act-routine}{
+	name={\texttt{ACT-ROUTINE}},
+     plural={\texttt{act-routine}},
+	description={
+	\texttt{self}\myuline{[sequencing]} 
+	\\ $\rightarrow$  \textit{thread}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+		
 \newglossaryentry{cah-fanaux}{
 	name={\texttt{CAH-FANAUX}},
 	plural={\texttt{cah-fanaux}},
@@ -79,6 +96,15 @@
 	\\ \texttt{:field} -- List of maximum value by dimension.
 	\\ \texttt{:n-fanaux} -- Initiate the fanaux list according to the hierarchical clustering using Ward's method. ..}\bigskip
 	}	
+	
+\newglossaryentry{create-sequencing}{
+	name={\texttt{CREATE-SEQUENCING}},
+	plural={\texttt{create-sequencing}},
+	description={
+	\textsl{{\&}key} \texttt{dub}\myuline{[symbol]} \texttt{description}\myuline{[string]} \texttt{net}\myuline{[som$|$mlt$|$area]} \texttt{buffer-size}\myuline{[int]} \texttt{pulse}\myuline{[num]} \texttt{sync}\myuline{[bool]} \texttt{pattern}\myuline{[list]} \texttt{tag}\myuline{[symbol]} \texttt{meter}\myuline{[num]} \texttt{remanence}\myuline{[bool]} \texttt{odds}\myuline{[function]} \texttt{osc}\myuline{[list$|$int]}
+	\\ $\rightarrow$ \textit{sequencing}  
+	\vspace{2mm} \\ \textit{Sequencing} instantiation. ..}\bigskip
+	}
 			
 \newglossaryentry{dendrogram}{
 	name={\texttt{DENDROGRAM}},
@@ -155,6 +181,16 @@
 	\vspace{2mm} \\ List all leaves from \textit{self} as a root node, or from a given node or distance set with the key \textit{trim}. ..}\bigskip
 	}
 	
+\newglossaryentry{kill-routine}{
+	name={\texttt{KILL-ROUTINE}},
+     plural={\texttt{kill-routine}},
+	description={
+	\texttt{self}\myuline{[sequencing]} 
+	\\ \textsl{{\&}key} \texttt{message}\myuline{[list]}
+	\\ $\rightarrow$   \textit{nil}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+		
 \newglossaryentry{lambda*}{
 	name={\texttt{LAMBDA*}},
 	plural={\texttt{lambda*}},
@@ -291,7 +327,7 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	name={\texttt{SAVE}},
 	plural={\texttt{save}},
 	description={
-	\texttt{self}\myuline{[node$|$som$|$mlt$|$area]} 
+	\texttt{self}\myuline{[node$|$som$|$mlt$|$area$|$sequencing]} 
 	\\ $\rightarrow$ \textit{nil}  
 	\vspace{2mm} \\ Save \textit{self} in \glspl{*n3-backup-directory*}.
 	\\ If \textit{self} is a node, it is saved in the following subdirectories: 
@@ -318,6 +354,43 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	\texttt{message}\myuline{[list]} \texttt{host}\myuline{[string]} \texttt{port}\myuline{[int]} 
 	\\ $\rightarrow$ \textit{T}  
 	\vspace{2mm} \\ The message is a list of string. ..}\bigskip
+	}
+
+\newglossaryentry{sequencing-menu}{
+	name={\texttt{SEQUENCING-MENU}},
+	plural={\texttt{sequencing-menu}},
+	description={
+	Display available sequencing to load. ..}\bigskip
+	}
+	
+\newglossaryentry{set-pattern}{
+	name={\texttt{SET-PATTERN}},
+     plural={\texttt{set-pattern}},
+	description={
+	\texttt{self}\myuline{[sequencing]}   \texttt{keyword}\myuline{[keyword]}
+	\\  \textsl{{\&}optional} \texttt{pattern}\myuline{[function$|$list]}
+	\\ $\rightarrow$  \textit{list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+
+\newglossaryentry{set-routine}{
+	name={\texttt{SET-ROUTINE}},
+     plural={\texttt{set-routine}},
+	description={
+	\texttt{self}\myuline{[sequencing]} 
+	\\ \textsl{{\&}body} \texttt{funcs}\myuline{[function(s)]}
+	\\ $\rightarrow$  \textit{lambda-list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+	
+\newglossaryentry{set-rule}{
+	name={\texttt{SET-RULE}},
+     plural={\texttt{set-rule}},
+	description={
+	\texttt{self}\myuline{[sequencing]} 
+	\\ \textsl{{\&}body} \texttt{funcs}\myuline{[function(s)]}
+	\\ $\rightarrow$  \textit{lambda-list}  
+	\vspace{1mm} \\ ..}\bigskip
 	}
 
 \newglossaryentry{tree-menu}{

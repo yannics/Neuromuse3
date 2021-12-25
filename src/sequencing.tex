@@ -4,6 +4,10 @@
 
 For now, threading in sequencing works only under Clozure CL 1.12.1
 
+Also, the synchronisation does not fully work and needs to be improved.
+
+Work in progress ...
+
 \end{notes}
 
 \bigskip
@@ -12,7 +16,7 @@ The sequencing is managed with the class of the same name described in the follo
 
 \smallskip
 
-The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name. 
+The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name. 
 
 \bigskip 
 
@@ -23,27 +27,28 @@ The principle consists to estimate an occurrence according to the context define
   &   & \normal{\head{Slot}} & \normal{\head{\hspace{2mm} Input}}
   & \normal{\head{Note}} \\
     \midrule
-  \multirow{19}{*}{SEQUENCING} 
+  \multirow{20}{*}{SEQUENCING} 
   &   & name & {\footnotesize SEQUENCING} &  \\
   &  \faCog & dub & \textit{symbol}$|$\textit{string} & `nickname' \\
   &  \faCog & description & \itshape string &   \\
   &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
-  &   & buffer-in & \itshape list &  sync/listen input \\
-  &   & buffer-out & \itshape list &  sync/send output \\
-      &   & dyn-buffer & \itshape list &  dynamic `remanence' \\
+        &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
+  &   & buffer-in & \itshape list & (\glspl{osc-listen} \texttt{<osc-in>}) \\
+  &   & buffer-out & \itshape list & (\glspl{send-udp} …\texttt{<osc-out>}) \\
     &  \faCog & buffer-size & \itshape integer &  maximum size \\
-    &  \faCog & pattern & \itshape list &   \\
-  &  \faCog & pulse & \itshape number &  {\footnotesize relative duration factor}  \\
-      &  \faCog & sync & \itshape integer &   \\
-    &  \faCog & meter & \itshape number & time domain modulo  \\
-      &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
+    &  \faCog & buffer-thres & \itshape integer &  minimum size \\
+        &  \faCode & pattern & \itshape list &   $\rightarrow$  \glspl{set-pattern} \\
+                  &  \faCode & rule & \itshape function & $\rightarrow$  \glspl{set-rule}  \\
+        &  \faCode & routine & \textit{function} & $\rightarrow$  \glspl{set-routine} \\
         &  \faCog & odds & \textit{function} &  \\
-                  &  \faCode & rule & \itshape function & $\rightarrow$ \texttt{set-rule}  \\
-        &  \faCode & routine & \textit{function} & $\rightarrow$ \texttt{set-routine} \\
-        &   & outset & \itshape boolean &  \\
-        &   & offset & \itshape number &  \\
-  &   & counter & \itshape integer &   \\
-  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & udp-list & \itshape list &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
+  &  \faCog & pulse & \itshape number &  {\footnotesize relative duration factor}  \\
+    &  \faCog & meter & \itshape number & time domain modulo  \\
+      &  \faCog & sync & \textit{boolean} &   \\
+%        &   & outset & \itshape boolean &  \\
+  %      &   & offset & \itshape number &  \\
+ % &   & counter & \itshape integer &   \\
+    &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-in &  \textit{list}$|$\textit{integer} &  {\footnotesize port(s)[integer]}  \\ 
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-out & \textit{list}$|$\textit{integer} &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
     &  \faCog & tag & \textit{symbol}$|$\textit{string} &   \\
     &   & mem-cache & \itshape hash-table &   \\
 \end{tabular}
@@ -56,15 +61,16 @@ The rule predefines the event as a partial clique or event. The rule(s) is(are) 
 
 \smallskip
  
-Regarding the function(s) involve(s) in \texttt{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
+Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
 
 \smallskip
 
-Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the dyn-buffer and the out-buffer according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffers involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
-%\bigskip
-%\bigskip
+Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the buffer-out according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffer(s) involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
 
-\newpage
+\bigskip
+\bigskip
+
+%\newpage
 \noindent {\large \textbf{About synchronisation}}
 
 \bigskip
@@ -89,6 +95,16 @@ Hence the synchronisation is done on the modulo of the pulsation with respect to
          (/ +beat+ *latency*))) 
    (meter <sequencing>))   
 \end{lstlisting}
+
+\bigskip
+\bigskip
+
+%\newpage
+\noindent {\large \textbf{About time lag}}
+
+\bigskip
+
+When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default value), the sustained last event, or the call of a pattern or any kind of alternative routine.
 
 \bigskip
 \bigskip

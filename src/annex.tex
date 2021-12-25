@@ -188,9 +188,9 @@ The learning process at the area level consists to record all connected nodes fr
  :osc 7771)
 (set-rule *voice1* 
   (make-list (length (soms-list (id (net self)))) 
-    :initial-element '?)))
+    :initial-element '?))
 (set-routine *voice1* 
-  (markov-chain self (id (net self)) (dyn-buffer self)))
+  (markov-chain self (buffer-out self)))
 ;; ... and play
 (act-routine *voice1*)
 ;; ... and stop
