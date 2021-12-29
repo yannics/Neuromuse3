@@ -6,6 +6,8 @@ For now, threading in sequencing works only under Clozure CL 1.12.1
 
 Also, the synchronisation does not fully work and needs to be improved.
 
+The `sequencing'  is currently developed with the net as AREA.
+
 Work in progress ...
 
 \end{notes}
@@ -37,7 +39,7 @@ The principle consists to estimate an occurrence according to the context define
   &   & buffer-out & \itshape list & (\glspl{send-udp} …\texttt{<osc-out>}) \\
     &  \faCog & buffer-size & \itshape integer &  maximum size \\
     &  \faCog & buffer-thres & \itshape integer &  minimum size \\
-        &  \faCode & pattern & \itshape list &   $\rightarrow$  \glspl{set-pattern} \\
+        &  \faCog & pattern & \itshape list &  list of events \\
                   &  \faCode & rule & \itshape function & $\rightarrow$  \glspl{set-rule}  \\
         &  \faCode & routine & \textit{function} & $\rightarrow$  \glspl{set-routine} \\
         &  \faCog & odds & \textit{function} &  \\
@@ -104,7 +106,7 @@ Hence the synchronisation is done on the modulo of the pulsation with respect to
 
 \bigskip
 
-When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default value), the sustained last event, or the call of a pattern or any kind of alternative routine.
+When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default behavior), the sustained last event, or the call of a pattern or any kind of alternative routine.
 
 \bigskip
 \bigskip

@@ -1,4 +1,4 @@
-%===============================================================
+ %===============================================================
 %% $ makeglossaries "main"
 %\newglossaryentry{*}{
 %	name={*},
@@ -236,7 +236,7 @@
 	\texttt{nodes}\myuline{[list$|$hash-table$|$mlt$|$area]}  
 	\\ \textsl{{\&}optional} \texttt{kw}\myuline{[keyword]} \texttt{order}\myuline{[int]}	
 	\\ $\rightarrow$ \textit{list}  
-	\vspace{2mm} \\ List all cycles from a list of edges. ..}\bigskip
+	\vspace{2mm} \\ List all cycles from a list of edges.\\ The keyword is effective only on the MLT or the AREA as the second value of the multiple return values.\\ \texttt{:wlist} -- list of weight's edges by cycle.\\ \texttt{:wstats} -- list of [ sum of weight's edges by cycle + mean value of the normalized \textit{wlist} + standard deviation of the normalized \textit{wlist} ] by cycle ..}\bigskip
 	}	
 	
 \newglossaryentry{locate-tournoi}{
@@ -363,15 +363,15 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	Display available sequencing to load. ..}\bigskip
 	}
 	
-\newglossaryentry{set-pattern}{
-	name={\texttt{SET-PATTERN}},
-     plural={\texttt{set-pattern}},
-	description={
-	\texttt{self}\myuline{[sequencing]}   \texttt{keyword}\myuline{[keyword]}
-	\\  \textsl{{\&}optional} \texttt{pattern}\myuline{[function$|$list]}
-	\\ $\rightarrow$  \textit{list}  
-	\vspace{1mm} \\ ..}\bigskip
-	}
+%\newglossaryentry{set-pattern}{
+%	name={\texttt{SET-PATTERN}},
+%     plural={\texttt{set-pattern}},
+%	description={
+%	\texttt{self}\myuline{[sequencing]}   \texttt{keyword}\myuline{[keyword]}
+%	\\  \textsl{{\&}optional} \texttt{pattern}\myuline{[function$|$list]}
+%	\\ $\rightarrow$  \textit{list}  
+%	\vspace{1mm} \\ ..}\bigskip
+%	}
 
 \newglossaryentry{set-routine}{
 	name={\texttt{SET-ROUTINE}},
@@ -390,6 +390,16 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	\texttt{self}\myuline{[sequencing]} 
 	\\ \textsl{{\&}body} \texttt{funcs}\myuline{[function(s)]}
 	\\ $\rightarrow$  \textit{lambda-list}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+
+\newglossaryentry{set-subroutine}{
+	name={\texttt{SET-SUBROUTINE}},
+     plural={\texttt{set-subroutine}},
+	description={
+	\texttt{self}\myuline{[sequencing]} 
+	\\ \textsl{{\&}key} \texttt{is}\myuline{[keyword]} \texttt{with}\myuline{[list$|$sequencing]} \texttt{pulse}\myuline{[num]} \texttt{as-learned}\myuline{[bool]} 
+	\\ $\rightarrow$  \textit{nil}  
 	\vspace{1mm} \\ ..}\bigskip
 	}
 
