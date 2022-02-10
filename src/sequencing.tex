@@ -2,11 +2,15 @@
 
 {\large \textbf{Important}}
 
-For now, threading in sequencing works only under Clozure CL 1.12.1
+\begin{itemize}
 
-Also, the synchronisation does not fully work and needs to be improved.
+\item For now, threading in `sequencing' works only under Clozure CL 1.12.1
 
-The `sequencing'  is currently developed with the net as AREA.
+\item Also, the synchronisation is not yet implemented.
+
+\item The `sequencing'  is currently developed with the net as AREA.
+ 
+\end{itemize}
 
 Work in progress ...
 
@@ -85,18 +89,20 @@ First, some definitions in context:
 \item[\texttt{*latency*}] -- time step of the \texttt{+clock+} as $dt$ in second.
 \end{description}
    
-   \smallskip
-   
-Note when the synchronisation is effective as a boolean or as a number, the pulsation is set according to the value of this number as the factor of the meter, or the nearest factor according to the value of pulse by default. Then, the real value of the pulse is the value of \texttt{(cdr (sync <sequencing>))}.  
-
-Hence the synchronisation is done on the modulo of the pulsation with respect to the meter.
-\begin{lstlisting}[language=N3]
-(mod 
-   (/ +clock+ 
-      (* (cdr (sync <sequencing>)) 
-         (/ +beat+ *latency*))) 
-   (meter <sequencing>))   
-\end{lstlisting}
+%   \smallskip
+%   
+%Note when the synchronisation is effective as a boolean or as a number, the pulsation is set according to the value of this number as the factor of the meter, or the nearest factor according to the value of pulse by default. Then, the real value of the pulse is the value of \texttt{(cdr (sync <sequencing>))}.  
+%
+%Hence the synchronisation is done on the modulo of the pulsation with respect to the meter.
+%\begin{lstlisting}[language=N3]
+%(mod 
+%   (/ +clock+ 
+%      (* (cdr (sync <sequencing>)) 
+%         (/ +beat+ *latency*))) 
+%   (meter <sequencing>))   
+%\end{lstlisting}
+%
+%The synchronisation of one sequencing is subordinated to another one. Then the setting of the synchronisation requires the referring sequencing followed by an integer as the index of the beat of this sequencing and more broadly as the modulo meter of this sequencing of this number (0 by default, i.e. first beat).
 
 \bigskip
 \bigskip

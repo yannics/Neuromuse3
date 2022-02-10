@@ -88,12 +88,13 @@
 	plural={\texttt{create-mlt}},
 	description={
 	\texttt{name}\myuline{[symbol]} \texttt{n-input}\myuline{[int]} \texttt{n-neurons}\myuline{[int]} 
-	\\ \textsl{{\&}key} \texttt{carte}\myuline{[function]} \texttt{topology}\myuline{[int]} \texttt{field}\myuline{[list]} \texttt{n-fanaux}\myuline{[int]}
+	\\ \textsl{{\&}key} \texttt{carte}\myuline{[function]} \texttt{topology}\myuline{[int]} \texttt{field}\myuline{[num$|$list]}  \texttt{cover-value}\myuline{[int]}\\ \texttt{n-fanaux}\myuline{[int]} 
 	\\ $\rightarrow$ \textit{mlt}  
 	\vspace{2mm} \\ \textit{Colonne} instantiation with $n$ input as stimuli, and the number of neurons constituting the carte of the SOM.
 	\\ \texttt{:carte} -- Function (if lambda function then arguments are (\texttt{a}) the name as MLT and (\texttt{b}) the number of neurons). 
-	\\ \texttt{:topology} -- Number of dimension(s).
-	\\ \texttt{:field} -- List of maximum value by dimension.
+	\\ \texttt{:topology} -- Number of dimensions.
+	\\ \texttt{:field} -- List of maximum value by dimension or maximum value for all dimensions (by default 10 with \glspl{rnd-map} and $\lfloor \sqrt[d]{N} \rfloor$ with \glspl{quadrare}).
+	\\ \texttt{:cover-value} -- length of the MCT.
 	\\ \texttt{:n-fanaux} -- Initiate the fanaux list according to the hierarchical clustering using Ward's method. ..}\bigskip
 	}	
 	
@@ -101,7 +102,7 @@
 	name={\texttt{CREATE-SEQUENCING}},
 	plural={\texttt{create-sequencing}},
 	description={
-	\textsl{{\&}key} \texttt{dub}\myuline{[symbol]} \texttt{description}\myuline{[string]} \texttt{net}\myuline{[som$|$mlt$|$area]} \texttt{buffer-size}\myuline{[int]} \texttt{pulse}\myuline{[num]} \texttt{sync}\myuline{[bool]} \texttt{pattern}\myuline{[list]} \texttt{tag}\myuline{[symbol]} \texttt{meter}\myuline{[num]} \texttt{remanence}\myuline{[bool]} \texttt{odds}\myuline{[function]} \texttt{osc}\myuline{[list$|$int]}
+	\textsl{{\&}key} \texttt{dub}\myuline{[symbol]} \texttt{description}\myuline{[string]} \texttt{net}\myuline{[som$|$mlt$|$area]}   \texttt{remanence}\myuline{[bool]}\\ \texttt{buffer-size}\myuline{[int]} \texttt{buffer-thres}\myuline{[int]}   \texttt{pattern}\myuline{[list]}  \texttt{odds}\myuline{[function]}  \texttt{sync}\myuline{[bool]} \texttt{meter}\myuline{[num]} \texttt{pulse}\myuline{[num]} \texttt{tag}\myuline{[symbol]}  \texttt{osc-in}\myuline{[list$|$int]} \texttt{osc-out}\myuline{[list$|$int]}
 	\\ $\rightarrow$ \textit{sequencing}  
 	\vspace{2mm} \\ \textit{Sequencing} instantiation. ..}\bigskip
 	}
