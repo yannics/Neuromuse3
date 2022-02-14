@@ -14,6 +14,17 @@
 
 Work in progress ...
 
+\hrulefill 
+
+For convenience:
+\begin{itemize}
+
+\item the `dub' sequencing is set as a global variable, so in order to be recognise as such, its name should be wrapped between asterisks;
+
+\item in the case of `external' network calling, make or use a function with the keyword \texttt{:net}.
+ 
+\end{itemize}
+
 \end{notes}
 
 \bigskip
@@ -35,7 +46,7 @@ The principle consists to estimate an occurrence according to the context define
     \midrule
   \multirow{20}{*}{SEQUENCING} 
   &   & name & {\footnotesize SEQUENCING} &  \\
-  &  \faCog & dub & \textit{symbol}$|$\textit{string} & `nickname' \\
+  &  \faCog & dub & \textit{symbol} & `nickname' \\
   &  \faCog & description & \itshape string &   \\
   &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
         &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
@@ -55,7 +66,7 @@ The principle consists to estimate an occurrence according to the context define
  % &   & counter & \itshape integer &   \\
     &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-in &  \textit{list}$|$\textit{integer} &  {\footnotesize port(s)[integer]}  \\ 
   &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-out & \textit{list}$|$\textit{integer} &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
-    &  \faCog & tag & \textit{symbol}$|$\textit{string} &   \\
+    &  \faCog & tag & \textit{symbol} &   \\
     &   & mem-cache & \itshape hash-table &   \\
 \end{tabular}
 \caption{\label{table:seq}The sequencing class.}
