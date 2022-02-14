@@ -57,7 +57,7 @@
 	
 \newglossaryentry{act-routine}{
 	name={\texttt{ACT-ROUTINE}},
-     plural={\texttt{act-routine}},
+        plural={\texttt{act-routine}},
 	description={
 	\texttt{self}\myuline{[sequencing]} 
 	\\ $\rightarrow$  \textit{thread}  
@@ -124,7 +124,7 @@
 	
 \newglossaryentry{differential-vector}{
 	name={\texttt{DIFFERENTIAL-VECTOR}},
-     plural={\texttt{differential-vector}},
+        plural={\texttt{differential-vector}},
 	description={
 	\texttt{xs/l1}\myuline{[list]} \texttt{xs/l2}\myuline{[list]} 
 	\\ \textsl{{\&}key} \texttt{result}\myuline{[keyword]} \texttt{opt}\myuline{[keyword]} \texttt{thres}\myuline{[num]} \texttt{ended}\myuline{[keyword]} \\ \texttt{cluster}\myuline{[keyword]} \texttt{tolerance}\myuline{[keyword]}
@@ -135,7 +135,7 @@
 		
 \newglossaryentry{euclidean}{
 	name={\texttt{EUCLIDEAN}},
-     plural={\texttt{euclidean}},
+        plural={\texttt{euclidean}},
 	description={
 	\texttt{arg1}\myuline{[neuron$|$som$|$list$|$event]} \texttt{arg2}\myuline{[neuron$|$list$|$event]} 
 	\\ \textsl{{\&}key} \texttt{modulo}\myuline{[num$|$bool]} \texttt{position}\myuline{[bool]} \texttt{weight}\myuline{[num$|$list]}
@@ -145,7 +145,7 @@
 	
 \newglossaryentry{exp-decay}{
 	name={\texttt{EXP-DECAY}},
-     plural={\texttt{exp-decay}},
+        plural={\texttt{exp-decay}},
 	description={
 	\texttt{epoch}\myuline{[int]} \texttt{init-val}\myuline{[num]} \texttt{learning-rate}\myuline{[num]} 
 	\\ \textsl{{\&}optional} \texttt{final-val}\myuline{[num]}
@@ -155,7 +155,7 @@
 
 \newglossaryentry{fn-mex}{
 	name={\texttt{FN-MEX}},
-     plural={\texttt{fn-mex}},
+        plural={\texttt{fn-mex}},
 	description={
 	\texttt{distance}\myuline{[num]} \texttt{radius}\myuline{[num]}  \texttt{learning-rate}\myuline{[num]}
 	\\ \textsl{{\&}key} \texttt{inh}\myuline{[num]}
@@ -165,7 +165,7 @@
 
 \newglossaryentry{gauss}{
 	name={\texttt{GAUSS}},
-     plural={\texttt{gauss}},
+        plural={\texttt{gauss}},
 	description={
 	\texttt{distance}\myuline{[num]} \texttt{radius}\myuline{[num]}  \texttt{learning-rate}\myuline{[num]}
 	\\ $\rightarrow$ \textit{num}  
@@ -184,7 +184,7 @@
 	
 \newglossaryentry{kill-routine}{
 	name={\texttt{KILL-ROUTINE}},
-     plural={\texttt{kill-routine}},
+        plural={\texttt{kill-routine}},
 	description={
 	\texttt{self}\myuline{[sequencing]} 
 	\\ \textsl{{\&}key} \texttt{message}\myuline{[list]}
@@ -306,7 +306,7 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	
 \newglossaryentry{quadrare}{
 	name={\texttt{QUADRARE}},
-     plural={\texttt{quadrare}},
+        plural={\texttt{quadrare}},
 	description={
 	\texttt{self}\myuline{[som]} \texttt{nbre-neurons}\myuline{[int]} 
 	\\ \textsl{{\&}key} \texttt{about}\myuline{[int]} \texttt{topology}\myuline{[int]}
@@ -316,7 +316,7 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 
 \newglossaryentry{rnd-map}{
 	name={\texttt{RND-MAP}},
-     plural={\texttt{rnd-map}},
+        plural={\texttt{rnd-map}},
 	description={
 	\texttt{self}\myuline{[som]} \texttt{nbre-neurons}\myuline{[int]} 
 	\\ \textsl{{\&}key} \texttt{about}\myuline{[int]} \texttt{topology}\myuline{[int]}
@@ -374,9 +374,18 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 %	\vspace{1mm} \\ ..}\bigskip
 %	}
 
+\newglossaryentry{set-pulse}{
+	name={\texttt{SET-PULSE}},
+        plural={\texttt{set-pulse}},
+	description={
+	\texttt{self}\myuline{[sequencing]} \texttt{pulse}\myuline{[num]} 
+	\\ $\rightarrow$  \textit{num}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+	
 \newglossaryentry{set-routine}{
 	name={\texttt{SET-ROUTINE}},
-     plural={\texttt{set-routine}},
+        plural={\texttt{set-routine}},
 	description={
 	\texttt{self}\myuline{[sequencing]} 
 	\\ \textsl{{\&}body} \texttt{funcs}\myuline{[function(s)]}
@@ -386,7 +395,7 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	
 \newglossaryentry{set-rule}{
 	name={\texttt{SET-RULE}},
-     plural={\texttt{set-rule}},
+        plural={\texttt{set-rule}},
 	description={
 	\texttt{self}\myuline{[sequencing]} 
 	\\ \textsl{{\&}body} \texttt{funcs}\myuline{[function(s)]}
@@ -396,7 +405,7 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 
 \newglossaryentry{set-subroutine}{
 	name={\texttt{SET-SUBROUTINE}},
-     plural={\texttt{set-subroutine}},
+        plural={\texttt{set-subroutine}},
 	description={
 	\texttt{self}\myuline{[sequencing]} 
 	\\ \textsl{{\&}key} \texttt{is}\myuline{[keyword]} \texttt{with}\myuline{[list$|$sequencing]} \texttt{pulse}\myuline{[num]} \texttt{as-learned}\myuline{[bool]} 
