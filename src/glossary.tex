@@ -74,6 +74,16 @@
 	\vspace{2mm} \\ Divide the tree defined by \textit{self} into $n$ classes by trimming. The result is a list of leaves by class. If the key \textit{trim} is set, the result is a list of nodes. ..}\bigskip
 	}
 	
+\newglossaryentry{copy}{
+	name={\texttt{COPY}},
+	plural={\texttt{copy}},
+	description={
+	\texttt{self}\myuline{[som$|$area$|$sequencing]} 
+	\\ \textsl{{\&}key} \texttt{newname}\myuline{[symbol]} \texttt{with}\myuline{[list]}   \texttt{reset}\myuline{[bool]}
+	\\ $\rightarrow$ \textit{nil}  
+	\vspace{2mm}  \\ The optional keywords \texttt{:with} and \texttt{:reset} concern only \textit{self} as an AREA. The argument of \texttt{:with} is a new  \texttt{soms-list} as a list of SOM new names -- which should be the same length of the \texttt{soms-list} of \textit{self}. ..}\bigskip
+	}
+	
 \newglossaryentry{create-area}{
 	name={\texttt{CREATE-AREA}},
 	plural={\texttt{create-area}},
