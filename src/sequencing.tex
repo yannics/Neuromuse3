@@ -8,7 +8,7 @@
 
 \item Also, the synchronisation is not yet implemented.
 
-\item The `sequencing'  is currently developed with the net as AREA.
+\item The  net of  `sequencing'  concerns for now only the AREA.
  
 \end{itemize}
 
@@ -33,7 +33,7 @@ The sequencing is managed with the class of the same name described in the follo
 
 \smallskip
 
-The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name. 
+The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name.  %The remanence in certain situation can be set as an integer.
 
 \bigskip 
 
@@ -49,7 +49,7 @@ The principle consists to estimate an occurrence according to the context define
   &  \faCog & dub & \textit{symbol} & `nickname' \\
   &  \faCog & description & \itshape string &   \\
   &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
-        &  \faCog & remanence & \itshape boolean & of \texttt{net}  \\
+        &  \faCog & remanence & \itshape boolean$|$integer & \tablefootnote{Concerning the remanence, there is three specific cases. When unset (1) there is still a default value set to one as the last event sent. When set as boolean and when the \texttt{net} is set, (2) the remanence is the value of \texttt{*remanence*}  (global value from N3D). When remanence is set as an integer, then (3) the remanence is this value.}  \\
   &   & buffer-in & \itshape list & (\glspl{osc-listen} \texttt{<osc-in>}) \\
   &   & buffer-out & \itshape list & (\glspl{send-udp} …\texttt{<osc-out>}) \\
     &  \faCog & buffer-size & \itshape integer &  maximum size \\
@@ -71,6 +71,7 @@ The principle consists to estimate an occurrence according to the context define
 \end{tabular}
 \caption{\label{table:seq}The sequencing class.}
 \end{table}
+
 
 \smallskip
 
@@ -123,7 +124,7 @@ First, some definitions in context:
 
 \bigskip
 
-When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default behavior), the sustained last event, or the call of a pattern or any kind of alternative routine.
+When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default behavior), the sustained last event, or the call of a pattern or any kind of lambda function or alternative routine.
 
 \bigskip
 \bigskip
