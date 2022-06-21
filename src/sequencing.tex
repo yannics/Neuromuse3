@@ -49,7 +49,8 @@ The principle consists to estimate an occurrence according to the context define
   &  \faCog & dub & \textit{symbol} & `nickname' \\
   &  \faCog & description & \itshape string &   \\
   &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
-        &  \faCog & remanence & \itshape boolean$|$integer & \tablefootnote{Concerning the remanence, there is three specific cases. When unset (1) there is still a default value set to one as the last event sent. When set as boolean and when the \texttt{net} is set, (2) the remanence is the value of \texttt{*remanence*}  (global value from N3D). When remanence is set as an integer, then (3) the remanence is this value.}  \\
+  &  \faCog & corpus & {\footnotesize \textit{string}$|$\textit{pathname}} &  $\rightarrow$ \texttt{set-corpus}  \\
+        &  \faCog & remanence & \itshape boolean$|$integer & \tablefootnote{Concerning the remanence, there is four specific cases. When unset (1) there is still a default value set to one as the last event sent. When set as boolean and when the \texttt{net} is set, (2) the remanence is the value of \texttt{*remanence*}  (global value from N3D). When remanence is set as an integer, then (3) the remanence is this value. Finally, when the slot corpus is set, the remanence is set on the keyword :corpus (this might conflict with net, so for now it is recommended to dedicate sequencing for either a net or a corpus). The corpus itself is a data file path (stored in "$\sim$/Documents/neuromuse3-backup-networks/data/" by default).}  \\
   &   & buffer-in & \itshape list & (\glspl{osc-listen} \texttt{<osc-in>}) \\
   &   & buffer-out & \itshape list & (\glspl{send-udp} …\texttt{<osc-out>}) \\
     &  \faCog & buffer-size & \itshape integer &  maximum size \\
