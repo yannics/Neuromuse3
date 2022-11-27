@@ -190,7 +190,7 @@ The learning process at the area level consists to record all connected nodes fr
   (make-list (length (soms-list (id (net self)))) 
     :initial-element '?))
 (set-routine *voice1* 
-  (markov-chain self (buffer-out self)))
+  (markov-chain self))
 ;; ... and play
 (act-routine *voice1*)
 ;; ... and stop
