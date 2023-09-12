@@ -4,15 +4,13 @@
 
 \begin{itemize}
 
-\item For now, threading in `sequencing' works only under Clozure CL 1.12.1
-
-\item Also, the synchronisation is not yet implemented.
+\item The duration expressed in pulse for a clique must be understood as indice, that is to say 0 for 1 pulse, 1 for 2 pulses, and so on. Conventionally, this is the first value of the clique or the list destinated to fill the buffer of the sequencing.
 
 \item The  net of  `sequencing'  concerns for now only the AREA.
  
+\item The synchronisation is effective only when the `leader' is running, and match the beginning of the measure of this `leader' according to the \texttt{anacrusis} value of the `follower'. Also, the synchronisation is effective to resume a routine paused or interrupted by a subroutine. Note the `leader' can be silent as a conductor as long as it is activated.
+ 
 \end{itemize}
-
-Work in progress ...
 
 \hrulefill 
 
@@ -21,7 +19,7 @@ For convenience:
 
 \item the `dub' sequencing is set as a global variable, so in order to be recognise as such, its name should be wrapped between asterisks;
 
-\item in the case of `external' network calling, make or use a function with the keyword \texttt{:net}.
+%\item in the case of `external' network calling, make or use a function with the keyword \texttt{:net}.
  
 \end{itemize}
 
@@ -31,7 +29,15 @@ For convenience:
 
 The sequencing is managed with the class of the same name described in the following table \ref{table:seq}. Each sequencing as an object is instantiated generating its own sequence with its own rule(s). Each parameter and function is accessible from the name or the `dub' (i.e. nickname) of this object leading to interact at any time with code or other sequencing instantiation.
 
-\bigskip 
+\bigskip
+
+The principle consists to estimate an occurrence according to the context defined for instance by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. 
+%The `dynamic buffer' can be leaded by other buffer(s) if needed. 
+In that case, the computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument %the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and 
+the odds function (\texttt{:compute} %set with the function \texttt{rnd-weighted} by default) of the current sequencing 
+--  according to the rule defined by the slot of the same name.  %The remanence in certain situation can be set as an integer. 
+
+\bigskip
 
 \begin{table}[ht]
 \small
@@ -44,26 +50,21 @@ The sequencing is managed with the class of the same name described in the follo
   &   & name & {\footnotesize SEQUENCING} &  \\
   &  \faCog & dub & \textit{symbol} & `nickname' \\
   &  \faCog & description & \itshape string &   \\
-  &  \faCog & net & {\footnotesize MLT$|$AREA} &   \\
-  &  \faCog & corpus & {\footnotesize \textit{string}$|$\textit{function}} &  $\rightarrow$ \glspl{set-corpus}  \\
-        &  \faCog & remanence & \itshape boolean$|$integer & \tablefootnote{Concerning the remanence, there is four specific cases. When unset (1) there is still a default value set to one as the last event sent. When set as boolean and when the \texttt{net} is set, (2) the remanence is the value of \texttt{*remanence*}  (global value from N3D). When remanence is set as an integer, then (3) the remanence is this value. Finally, when the slot corpus is set, the remanence is set on the keyword \texttt{:corpus} (this might conflict with net, so for now it is recommended to dedicate sequencing for either a net or a corpus). The corpus itself is a data file path (stored in "$\sim$/Documents/neuromuse3-backup-networks/data/" by default).}  \\
-  &   & buffer-in & \itshape list & (\glspl{osc-listen} \texttt{<osc-in>}) \\
-  &   & buffer-out & \itshape list & (\glspl{send-udp} …\texttt{<osc-out>}) \\
+  &  \faCog & net & {\footnotesize MLT$|$AREA} & or \texttt{:corpus}\tablefootnote{An alternative to the AREA or MLT is to set a specific corpus as a list, a data file, or a function, initiated with the function \glspl{set-corpus}. The corpus itself is a data file stored in \glspl{*n3-backup-directory*}/\texttt{data/}.}   \\
+  &   & buffer-out & \itshape list &  \\
     &  \faCog & buffer-size & \itshape integer &  maximum size \\
     &  \faCog & buffer-thres & \itshape integer &  minimum size \\
-        &  \faCog & pattern & \itshape list &  list of events \\
+     &  \faCog & pulse & \itshape number &   for one beat \\
+      &  \faCog & sync & {\footnotesize SEQUENCING} &   as `leader' \\
+      &  \faCog & meter & \itshape number & number of beat  \\
+    &  \faCog & anacrusis & \itshape integer & number of pulse\tablefootnote{Kind of delay according to the starting point of the measure as modulo of the master \texttt{meter} (which is defined by the slot \texttt{sync}).} \\
+                &  \faCog & pattern & \itshape list &  list of events \\
                   &  \faCode & rule & \itshape function & $\rightarrow$  \glspl{set-rule}  \\
         &  \faCode & routine & \textit{function} & $\rightarrow$  \glspl{set-routine} \\
-        &  \faCog & odds & \textit{function} &  \\
-  &  \faCog & pulse & \itshape number &  {\footnotesize relative duration factor}  \\
-    &  \faCog & meter & \itshape number & time domain modulo  \\
-      &  \faCog & sync & \textit{boolean} &   \\
-%        &   & outset & \itshape boolean &  \\
-  %      &   & offset & \itshape number &  \\
- % &   & counter & \itshape integer &   \\
-    &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-in &  \textit{integer} &  {\footnotesize port}  \\ 
-  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & osc-out & \textit{list}$|$\textit{integer} &  {\footnotesize IP[string]+port(s)[integer]}  \\ 
-    &  \faCog & tag & \textit{symbol} &  \texttt{/N3} by default \\
+                &  \faCode & subroutine & {\footnotesize SEQUENCING} & $\rightarrow$  \glspl{set-subroutine} \\
+    &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & ip &  \textit{string} &  {\footnotesize localhost by default}  \\ 
+  &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & port & \textit{integer} &    \\ 
+    &  \begin{minipage}{.025\textwidth}\includegraphics[width=\linewidth]{1123}\end{minipage} & tag & \textit{symbol} &  \texttt{/N3} by default \\
     &   & mem-cache & \itshape hash-table &   \\
 \end{tabular}
 \caption{\label{table:seq}The sequencing class.}
@@ -71,15 +72,37 @@ The sequencing is managed with the class of the same name described in the follo
 
 \smallskip
 
-The principle consists to estimate an occurrence according to the context defined by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. The `dynamic buffer' can be leaded by other buffer(s) if needed. The computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and the odds function (\texttt{:compute} set with the function \texttt{rnd-weighted} by default) of the current sequencing --  according to the rule defined by the slot of the same name.  %The remanence in certain situation can be set as an integer.
-
-\smallskip
-
-The rule predefines the event as a partial clique or event. The rule(s) is(are) embedded in a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self}.
+The rule should return what it is expected as argument if required of the routine. 
+Mainly, the rule predefines the event as a partial clique or event. Thus, the rule(s) is(are) embedded in a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self}.
 
 \smallskip
  
 Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabular}{ r l c l }
+  & \head{Key} & \head{Value} & \head{Note} \\ 
+ \midrule
+   & \texttt{last-event} & \textit{list} & keep track of the last event sent \\  
+   & \texttt{compute} & \textit{thread} & fill the buffer \\  
+  & \texttt{routine} & \textit{thread} & send OSC message \\  
+  & \texttt{routine-initform} & \textit{function} & \texttt{+routine+} \\  
+  & \texttt{subroutine-state} & \textit{boolean} &  \\  
+ \faCode & \texttt{corpus} & \textit{function} & \glspl{lambda*} function of the corpus \\  
+  \faCog & \texttt{ind} & \textit{integer$|$key} & modulate OSC message%optional argument of \texttt{bo}%
+\tablefootnote{Optional argument of internal function \texttt{bo}. The function \texttt{bo} returns either the message to send via OSC (basically a clique), or an information about this message. Thus, the optional \texttt{ind} can be an integer as indice to select an specific item of the clique (or as item of the buffer); or the keyword \texttt{:pos} to get the coordinate of the clique; or the keyword \texttt{:next} to append the next clique.}\\
+   \faCog &  \texttt{pattern-counter} & \textit{number} &  \\  
+  & \texttt{init-clock} & \textit{number} & \texttt{+clock+} at the first OSC  \\  
+  & \texttt{next-pulse} & \textit{number} &  \texttt{+clock+} to trigger next OSC %\\  
+ %\texttt{counter} & \textit{list} & {\scriptsize \texttt{(num\_beat\_in\_measure . num\_of\_past\_event)}} \\ 
+% \texttt{counter} & \textit{integer} & number of sent events  \\  
+%Then, the message of the \texttt{mem-cache} is appended to the result when \texttt{ind} is either \texttt{:next} or \texttt{nil}.
+\end{tabular}
+\caption{\label{table:seq}The \texttt{mem-cache} of the sequencing class.}
+\vspace{3mm}
+\end{table}
 
 \smallskip
 
@@ -95,26 +118,19 @@ Concerning the routine, when it set, one thread as deamon is created in order to
 
 First, some definitions in context:
 \begin{description}
-\item[\texttt{meter}] -- pattern of beats as the numerator of the time signature.
-\item[\texttt{+beat+}] -- tempo as the ratio of the previous beats defined by the \texttt{meter}, i.e. the duration in second of one beat as a global variable allowing to control globally the speed of the play.
-\item[\texttt{pulse}] -- minimal duration as the Least Common Multiple of the intended or expected rhythm.
 \item[\texttt{*latency*}] -- time step of the \texttt{+clock+} as $dt$ in second.
+\item[\texttt{+beat+}] -- tempo as the ratio of the beats defined by the \texttt{meter}, i.e. the duration in second of one beat as a global variable allowing to control globally the speed of the play. The value is the bpm (beat per minute) divided by 60.
+%\\ Then the duration of one measure is equal to \texttt{(* +beat+ (meter self))}
+\item[\texttt{pulse}] -- number of equal pulsations for one beat as the minimal duration or as the Greatest Common Divisor (GCD) of the intended or expected rhythm. %It determines the equal division of one beat such as $\forall n \in \mathbb{N}$, \texttt{pulse} $= 1/n$ 
+\item[\texttt{meter}] -- pattern of beats as the numerator of the time signature.
+\item[\texttt{anacrusis}] -- delay in number of pulse prepending the beginning of the measure.
 \end{description}
    
-%   \smallskip
-%   
-%Note when the synchronisation is effective as a boolean or as a number, the pulsation is set according to the value of this number as the factor of the meter, or the nearest factor according to the value of pulse by default. Then, the real value of the pulse is the value of \texttt{(cdr (sync <sequencing>))}.  
-%
-%Hence the synchronisation is done on the modulo of the pulsation with respect to the meter.
-%\begin{lstlisting}[language=N3]
-%(mod 
-%   (/ +clock+ 
-%      (* (cdr (sync <sequencing>)) 
-%         (/ +beat+ *latency*))) 
-%   (meter <sequencing>))   
-%\end{lstlisting}
-%
-%The synchronisation of one sequencing is subordinated to another one. Then the setting of the synchronisation requires the referring sequencing followed by an integer as the index of the beat of this sequencing and more broadly as the modulo meter of this sequencing of this number (0 by default, i.e. first beat).
+   \smallskip
+  
+  The computation of duration in number of \texttt{*latency*} as $dt$ is done with the number of pulse divided by the \texttt{+beat+} times  \texttt{*latency*}.%, knowing that reciprocal of \texttt{pulse} equal one beat.
+
+The synchronisation of one sequencing (the `follower') is subordinated to another one (the `leader'). Then the setting of the synchronisation of a `follower' (slot \texttt{sync}) requires the `leader' sequencing name and if needed the value of delay defined by the slot \texttt{anacrusis}.
 
 \bigskip
 \bigskip
@@ -124,7 +140,8 @@ First, some definitions in context:
 
 \bigskip
 
-When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and  taking into account the meter when the synchronisation is effective), or after the subroutine is completed. This subroutine can be silent (which is the default behavior), the sustained last event, or the call of a pattern or any kind of lambda function or alternative routine.
+When the computing time does not supply the buffer-out, a subroutine (according to the buffer-thres) takes over the routine until the complete filling of the buffer-out (according to the buffer-size and taking into account the meter when the synchronisation is effective). %, or after the subroutine is completed. 
+This subroutine is either silent (which is the default behavior) or a routine.
 
 \bigskip
 \bigskip
@@ -133,14 +150,8 @@ When the computing time does not supply the buffer-out, a subroutine (according 
 
 \bigskip
 
-See  4.7, 6.5.4 and 8.4 in \textsl{Journal of Generative Sonic Art} \citep{yi}. In short, what I call a `Dynamic Markov Chain' allows increasing or coercion decreasing the order in a manner that the transition probabilities do not reach 100\% for a single event.
+See  4.7, 6.5.4 and 8.4 in \textsl{Journal of Generative Sonic Art} \citep{yi}. In short, what I call a `Dynamic Markov Chain' allows increasing or coercion decreasing the order in a manner that the transition probabilities does not reach 100\% for a single event.
  
 See also code instance on the Annex \ref{ann:mcone} on page \pageref{ann:mcone}.
 
-%\bigskip
-%\bigskip
-%
-%\noindent {\large \textbf{Dynamic Cyclic Chain}}
-%
-%\bigskip
 

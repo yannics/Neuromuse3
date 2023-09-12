@@ -392,16 +392,16 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	\\ $\rightarrow$  \textit{nil}  
 	\vspace{1mm} \\ ..}\bigskip
 	}
-	
-\newglossaryentry{set-pulse}{
-	name={\texttt{SET-PULSE}},
-        plural={\texttt{set-pulse}},
+
+\newglossaryentry{set-pattern}{
+	name={\texttt{SET-PATTERN}},
+        plural={\texttt{set-pattern}},
 	description={
-	\texttt{self}\myuline{[sequencing]} \texttt{pulse}\myuline{[num]} 
-	\\ $\rightarrow$  \textit{num}  
+	\texttt{self}\myuline{[sequencing]} \texttt{lst}\myuline{[list]}
+	\\ $\rightarrow$  \textit{list}  
 	\vspace{1mm} \\ ..}\bigskip
 	}
-	
+		
 \newglossaryentry{set-routine}{
 	name={\texttt{SET-ROUTINE}},
         plural={\texttt{set-routine}},
@@ -426,12 +426,22 @@ keyword \texttt{:buffer} to evaluate the last event of the buffer according to i
 	name={\texttt{SET-SUBROUTINE}},
         plural={\texttt{set-subroutine}},
 	description={
-	\texttt{self}\myuline{[sequencing]} 
-	\\ \textsl{{\&}key} \texttt{is}\myuline{[keyword]} \texttt{with}\myuline{[list$|$sequencing]} \texttt{pulse}\myuline{[num]} \texttt{as-learned}\myuline{[bool]} 
-	\\ $\rightarrow$  \textit{nil}  
+	\texttt{self}\myuline{[sequencing]} \texttt{subroutine}\myuline{[sequencing]} 
+	\\ \textsl{{\&}key} \texttt{sync}\myuline{[bool]} \texttt{anacrusis}\myuline{[int]}  
+	\\ $\rightarrow$  \textit{table}  
 	\vspace{1mm} \\ ..}\bigskip
 	}
 
+\newglossaryentry{set-sync}{
+	name={\texttt{SET-SYNC}},
+        plural={\texttt{set-sync}},
+	description={
+	\texttt{self}\myuline{[sequencing]} \texttt{seq}\myuline{[sequencing]}
+	\\ \textsl{{\&}key} \texttt{anacrusis}\myuline{[int]} 
+	\\ $\rightarrow$  \textit{table}  
+	\vspace{1mm} \\ ..}\bigskip
+	}
+	
 \newglossaryentry{tree-menu}{
 	name={\texttt{TREE-MENU}},
 	plural={\texttt{tree-menu}},
