@@ -34,7 +34,7 @@ The sequencing is managed with the class of the same name described in the follo
 The principle consists to estimate an occurrence according to the context defined for instance by what I called a `dynamic buffer' -- as ordered events\footnote{The order is in time-inverse understanding that each computed event is pushed into the buffer as the first item of this buffer.} -- which is updated each time the computation is done by the function(s) set in routine. 
 %The `dynamic buffer' can be leaded by other buffer(s) if needed. 
 In that case, the computation consists mainly to apply the function \glspl{next-event-probability} -- taking as key argument %the remanence state of the net as boolean (\texttt{:remanence} \textit{nil} by default)  and 
-the odds function (\texttt{:compute} %set with the function \texttt{rnd-weighted} by default) of the current sequencing 
+the odds function \texttt{:compute} %set with the function \texttt{rnd-weighted} by default, of the current sequencing 
 --  according to the rule defined by the slot of the same name.  %The remanence in certain situation can be set as an integer. 
 
 \bigskip
@@ -57,7 +57,7 @@ the odds function (\texttt{:compute} %set with the function \texttt{rnd-weighted
      &  \faCog & pulse & \itshape number &   for one beat \\
       &  \faCode & sync & {\footnotesize SEQUENCING} &   $\rightarrow$  \glspl{set-sync} \\
       &  \faCog & meter & \itshape number & number of beat  \\
-    &  \faCog & anacrusis & \itshape integer & number of pulse\tablefootnote{Kind of delay according to the starting point of the measure as modulo of the master \texttt{meter} (which is defined by the slot \texttt{sync}).} \\
+    &  \faCog & anacrusis & \itshape integer & number of pulse\tablefootnote{Kind of delay according to the starting point of the measure as modulo of the `leader' \texttt{meter} (which is defined by the slot \texttt{sync}).} \\
                 &  \faCog & pattern & \itshape list &  list of events \\
                   &  \faCode & rule & \itshape function & $\rightarrow$  \glspl{set-rule}  \\
         &  \faCode & routine & \textit{function} & $\rightarrow$  \glspl{set-routine} \\
@@ -79,6 +79,10 @@ Mainly, the rule predefines the event as a partial clique or event. Thus, the ru
  
 Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
 
+\smallskip
+
+Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the buffer-out according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffer(s) involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
+
 \begin{table}[ht]
 \small
 \centering
@@ -91,11 +95,13 @@ Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to upda
   & \texttt{routine-initform} & \textit{function} & \texttt{+routine+} \\  
   & \texttt{subroutine-state} & \textit{boolean} &  \\  
  \faCode & \texttt{corpus} & \textit{function} & \glspl{lambda*} function of the corpus \\  
+ \faCode & \texttt{thirdpart} & \textit{list} & of \glspl{lambda*} function \\  
   \faCog & \texttt{ind} & \textit{integer$|$key} & modulate OSC message%optional argument of \texttt{bo}%
 \tablefootnote{Optional argument of internal function \texttt{bo}. The function \texttt{bo} returns either the message to send via OSC (basically a clique), or an information about this message. Thus, the optional \texttt{ind} can be an integer as indice to select an specific item of the clique (or as item of the buffer); or the keyword \texttt{:pos} to get the coordinate of the clique; or the keyword \texttt{:next} to append the next clique.}\\
    \faCog &  \texttt{pattern-counter} & \textit{number} &  \\  
   & \texttt{init-clock} & \textit{number} & \texttt{+clock+} at the first OSC  \\  
   & \texttt{next-pulse} & \textit{number} &  \texttt{+clock+} to trigger next OSC %\\  
+ % & \texttt{generic-counter} & \textit{list} & pulse, beat and meter\tablefootnote{Initiated as \texttt{(0 (pulse} \textit{self}\texttt{) 0 (meter} \textit{self}\texttt{) 0)} with zeros as respectively count pulse, count beat, and count meter.} %\\  
  %\texttt{counter} & \textit{list} & {\scriptsize \texttt{(num\_beat\_in\_measure . num\_of\_past\_event)}} \\ 
 % \texttt{counter} & \textit{integer} & number of sent events  \\  
 %Then, the message of the \texttt{mem-cache} is appended to the result when \texttt{ind} is either \texttt{:next} or \texttt{nil}.
@@ -104,11 +110,6 @@ Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to upda
 \vspace{3mm}
 \end{table}
 
-\smallskip
-
-Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the buffer-out according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffer(s) involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
-
-\bigskip
 \bigskip
 
 %\newpage
@@ -135,7 +136,7 @@ The synchronisation of one sequencing (the `follower') is subordinated to anothe
 \bigskip
 \bigskip
 
-%\newpage
+\newpage
 \noindent {\large \textbf{About time lag}}
 
 \bigskip
