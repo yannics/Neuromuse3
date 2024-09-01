@@ -70,16 +70,20 @@ the odds function \texttt{:compute} %set with the function \texttt{rnd-weighted}
 \caption{\label{table:seq}The sequencing class.}
 \end{table}
 
-\smallskip
+\color{white}{-}
+\color{black}
+%\smallskip
 
 The rule should return what it is expected as argument if required of the routine. 
 Mainly, the rule predefines the event as a partial clique or event. Thus, the rule(s) is(are) embedded in a \glspl{lambda*} function with as argument the sequencing object -- conventionally named \textit{self}.
 
-\smallskip
- 
+%\smallskip
+\bigskip
+
 Regarding the function(s) involve(s) in \glspl{set-routine}, the idea is to update the `dynamic buffer' as a complete clique or event. In case of more than one function, the processes are sequential. 
 
-\smallskip
+%\smallskip
+\bigskip
 
 Concerning the routine, when it set, one thread as deamon is created in order to do the computation, which consists to fill the buffer-out according to the buffer-size. This `deamon' thread is located in the mem-cache with the key \textsl{compute}. When the routine is acting, a second thread is created to manage the buffer(s) involved in time by sending data via OSC -- see \texttt{+routine+} function. This `main' thread is located in the mem-cache with the key \textsl{routine}.
 
@@ -110,7 +114,9 @@ Concerning the routine, when it set, one thread as deamon is created in order to
 \vspace{3mm}
 \end{table}
 
-\bigskip
+\color{white}{-}
+\color{black}
+%\bigskip
 
 %\newpage
 \noindent {\large \textbf{About synchronisation}}
@@ -127,7 +133,7 @@ First, some definitions in context:
 \item[\texttt{anacrusis}] -- delay in number of pulse prepending the beginning of the measure.
 \end{description}
    
-   \smallskip
+   \bigskip
   
   The computation of duration in number of \texttt{*latency*} as $dt$ is done with the number of pulse divided by the \texttt{+beat+} times  \texttt{*latency*}.%, knowing that reciprocal of \texttt{pulse} equal one beat.
 
@@ -136,7 +142,7 @@ The synchronisation of one sequencing (the `follower') is subordinated to anothe
 \bigskip
 \bigskip
 
-\newpage
+%\newpage
 \noindent {\large \textbf{About time lag}}
 
 \bigskip
@@ -145,6 +151,8 @@ When the computing time does not supply the buffer-out, a subroutine (according 
 This subroutine is either silent (which is the default behavior) or a routine.
 
 \bigskip
+\color{white}{-}
+\color{black}
 \bigskip
 
 \noindent {\large \textbf{Dynamic Markov Chain}}
