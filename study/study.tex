@@ -167,7 +167,7 @@ Finally, the harmony context is parsed as a sequence of chords defined by the or
 
 N3 as a connectionism network sent by OSC protocol a monophonic Markov chain, plus a combination of emergent cycles of the area.
 
-SuperCollider receives and interprets OSC messages via a mixer (see figure \ref{iphonemix} on page \pageref{iphonemix}) where each instrument shares or conditions the data with the others (see figures \ref{deps} and  \ref{share}).
+SuperCollider receives and interprets OSC messages via a mixer (see figure \ref{guiemix} on page \pageref{guiemix} and figure \ref{iphonemix} on page \pageref{iphonemix}) where each instrument shares or conditions the data with the others (see figures \ref{deps} and  \ref{share}).
 
 \begin{figure}[htbp]
 \centering
@@ -387,7 +387,7 @@ The fourth voice consists to grab the pitch and incidentally the rhythm of the \
 \subsubsection{Voice 5}
 
 The pitches of the \texttt{*orgue*} are interpreted with the \textit{pseudo-UGen} \texttt{Ulam} 
-(See 7.6 in \textsl{Journal of Generative Sonic Art} [Ics 2014/24]).%\citep{yi}).
+(See 7.6 in \textsl{Journal of Generative Sonic Art} [Ics 2014/24]).
 
 The \texttt{Ulam}'s parameters are:
 \begin{description}
@@ -401,153 +401,6 @@ The \texttt{Ulam}'s parameters are:
 \item[\quad detune] -- $\sim$\texttt{detune} (0.03) -- detune randomly between $-0.03\%$ and $+0.03\%$ of each frequency of the input array 
 \item[\quad rndAmp] -- $\sim$\texttt{rndAmp} (0.1) -- each collatz profile as signal is multiplied by a random value between $0.1$ and $1$
 \end{description}
-
-%\subsubsection{Synchronization}
-%
-%Silent sequencing as a tempo indicator, marking pulses, beats, and measures. 
-%
-%\begin{lstlisting}[language=N3]
-%;;----------------------------------
-%(create-sequencing :dub '*beat* :port 7000)
-%;;----------------------------------
-%(set-rule *beat*
-%  (if (buffer-out self)
-%   (gethash 'generic-counter (mem-cache self))
-%   (setf (gethash 'generic-counter (mem-cache self))
-%	 (list
-%	     0 ;; as indice of the minimal relative duration
-%	       ;; in other word 1 pulse
-%	     1 ;; pulse counter   (1)
-%	     (pulse self)
-%	     1 ;; beat counter    (3)
-%	     (meter self)
-%	     1 ;; measure counter (5)
-%	     ))))
-%;;----------------------------------	     
-%(set-routine *beat* 
-%  (push (funcall (rule self) self) (buffer-out self))
-%  (let ((cbuf 
-%  (copy-list (gethash 'generic-counter (mem-cache self)))))
-%    (if (>= (nth 1 cbuf) (pulse self))
-%       (progn
-%          (incf (nth 3 cbuf))
-%          (setf (nth 1 cbuf) 1))
-%       (incf (nth 1 cbuf)))
-%    (when (> (nth 3 cbuf) (meter self))
-%      (incf (nth 5 cbuf))
-%      (setf (nth 3 cbuf) 1))
-%   (setf (gethash 'generic-counter (mem-cache self)) cbuf)))
-%;;----------------------------------
-%(save *beat*)
-%\end{lstlisting}
-%
-%\newpage
-%\begin{lstlisting}[language=N3,basicstyle=\ttfamily\footnotesize]
-%;; synchronize with the previous sequencing
-%N3> (set-sync *flute* *beat* :save t)
-%|          | sequencing | pulse | meter | sync   | anacrusis |
-%| -------- | ---------- | ----- | ----- | ------ | --------- |
-%| LEADER   | *BEAT*     |     4 |     8 | NIL    |         0 |
-%| FOLLOWER | *FLUTE*    |     3 |     4 | *BEAT* |         0 |
-%NIL
-%N3> (set-sync *orgue* *beat* :save t)
-%|          | sequencing | pulse | meter | sync   | anacrusis |
-%| -------- | ---------- | ----- | ----- | ------ | --------- |
-%| LEADER   | *BEAT*     |     4 |     8 | NIL    |         0 |
-%| FOLLOWER | *ORGUE*    |   1/3 |    12 | *BEAT* |         0 |
-%NIL
-%\end{lstlisting}
-
-%\subsection{Third-parties}
-%\addtocounter{footnote}{-2}
-%
-%To connect any third-part, this is done through the cache memory defined by the keyword \texttt{thirdpart}, as a list of \texttt{lambda*} function. 
-%
-%\begin{lstlisting}[language=N3]
-%;; loading thirdpart 
-%(load-opt "thirdpart")
-%;; enable thirdpart
-%(setf *thirdpart* t)
-%\end{lstlisting}
-%
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=\textwidth]{../img/9910}
-%\caption{Third parties OSC communication overview as instances, from N3 sequencing to Processing\protect\footnotemark \, and INScore\protect\footnotemark.}
-%\end{figure}
-%\addtocounter{footnote}{-1}
-%\footnotetext{\href{https://processing.org}{\texttt{\scriptsize https://processing.org}}}  
-%\stepcounter{footnote}
-%\footnotetext{\href{https://inscore.grame.fr}{\texttt{\scriptsize https://inscore.grame.fr}}}  
-
-%\subsubsection{Initialisation}
-%
-%This is writing a data file for Processing, as in this case the position of all fanals of an AREA. 
-%\begin{lstlisting}[language=N3]
-%;; init Processing data
-%N3> (init-process corpus "~/Documents/Processing/N3_P5")
-%\end{lstlisting}
-
-%\subsubsection{Sending message}
-%
-%The OSC message sent to Processing is formatted as follow:
-%
-%\smallskip
-%
-% \texttt{\small [voice, rdur-1, deg-1, int-1, rdur, deg, int, rdur+1, deg+1, int+1]}
-% 
-% \smallskip
-% 
-%Which means \texttt{voice} as an id (1 for the flute [clique as the clear triangle], and 2 for the orgue [clique as red triangle]), \texttt{rdur} as the relative duration, \texttt{deg} as the degree, and \texttt{int} as the interval to the potential next note, as respectively the previous clique (minus one), the current clique, and the next clique (plus one).
-%
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=\textwidth]{../img/9920}
-%\caption{This is a 3D representation of the AREA network CORPUS. The `planets' are the `fanals' for each MLT of the AREA, respectively orange for relative durations, blue for degrees, and green for intervals.}
-%\end{figure}
-%
-%Note the previous and the next cliques are not yet displayed on Processing, because of the how to do that in a readable manner (work in progress...). 
-%
-%\begin{lstlisting}[language=N3]
-%;;----------------------------------
-%;; Voice 1 [*flute*]
-%;; OSC message to Processing (port 9000)
-%(thirdpart-message 
-%  (lambda* (self)
-%    (send-udp
-%      (cons "/sc3p5"
-%        (append
-%           '(1) ;; voice id
-%		       ;; previous clique
-%		       (if (gethash 'last-event (mem-cache self))
-%		         (car (gethash 'last-event (mem-cache self)))
-%		         (carlast (buffer-out self)))
-%		       ;; current clique 
-%		       (carlast (buffer-out self))
-%		       ;; next clique 
-%		       (cadr (reverse (buffer-out self)))))
-%	  "127.0.0.1" 9000)))
-%\end{lstlisting}
-%\begin{lstlisting}[language=N3]
-%;;----------------------------------
-%;; Voice 2 [*orgue*]
-%;; OSC message to Processing (port 9000)
-%(thirdpart-message
-%  (lambda* (self)
-%    (send-udp
-%     (cons "/sc3p5"
-%       (append
-%         '(2) ;; voice id
-%         ;; previous clique
-%         (if (gethash 'last-event (mem-cache self))
-%          (n-first 3 (car (gethash 'last-event (mem-cache self))))
-%          (n-first 3 (carlast (buffer-out self))))
-%         ;; current clique 
-%         (n-first 3 (carlast (buffer-out self)))
-%         ;; next clique 
-%         (n-first 3 (cadr (reverse (buffer-out self))))))
-%	  "127.0.0.1" 9000)))
-%\end{lstlisting}
 
 \subsection{Playing time}
 
@@ -574,25 +427,22 @@ The \texttt{Ulam}'s parameters are:
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{../img/9932}
-\caption*{GUI for mixing.}
+\caption{SuperCollider GUI for mixing.}
 \label{guiemix}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth/2]{../img/9930}
-\caption*{The mixing stage can also be ensured on an iPhone thanks to the application TouchOSC Mk1\protect\footnotemark.}
+\caption{The mixing stage can also be ensured on an iPhone thanks to the application TouchOSC Mk1\protect\footnotemark.}
 \label{iphonemix}
 \end{figure}
 
 \footnotetext{\href{https://hexler.net/touchosc-mk1}{\texttt{\scriptsize https://hexler.net/touchosc-mk1}}}
 
-%
-
-
-%\newpage
-
 \section*{Annexes}
+\addcontentsline{toc}{subsection}{Annexes}
+
 \label{annexes}
 
 \subsection*{...}
