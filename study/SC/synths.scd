@@ -219,16 +219,14 @@ SynthDef(\tbn,
 	{
 		/*
 		https://faust.grame.fr/
-		--> install Faust (with macport for instance):
+		--> install Faust (with MacPorts for instance):
 		    $ sudo port install faust
 		--> generate Brass Ugen from a Faust dsp file:
-		    $ SUPERCOLLIDER_HEADERS=/Users/.../supercollider-develop/include faust2supercollider brass.dsp -noprefix -ks
+		    $ SUPERCOLLIDER_HEADERS=$HOME/supercollider-develop/include faust2supercollider brass.dsp -noprefix -ks
 		  - required the header pointing out the SuperCollider source code path to the include directory
 		  - -noprefix removes the standard Faust -prefix
 		  - -ks as keep source (cpp file)
 		--> then create a directory named brass (for instance) containing (at least) the .sc and .scx files and move it to the Platform.userExtensionDir
-		--> see for more and update:
-		https://madskjeldgaard.dk/posts/getting-started-with-faust-for-supercollider/
 		*/
 		| out=0, pressure=0.0, breathgain=0.1, breathcutoff=2000.0, vibratofreq=5.0, vibratogain=0.25, tubelength=0.5, lipstension=0.5, mute=0.5, vp=0.1, vl=0.1, vt=0.1, t_poll, gate=1 |
 		var in, freq, hasFreq;
@@ -294,4 +292,47 @@ p.setProperties(\gridColorX, Color.white,
   \gridColorY, Color.white,\fontColor, Color.white);
 p.refresh;
 )
+*/
+
+/*
+For the SuperCollider documentation schelp relative to Faust, the following bash script (named faust4schelp) gives all needed informations from the DSP file.
+Syntax: $ faust4schelp <faustFile>.dsp
+--------------------------------------
+#!/bin/bash
+
+INFILE=$1
+
+if [[ -e "$INFILE" ]]; then
+
+	# Convert dsp to json
+	BASENAME=${INFILE%.dsp}
+	JSONNAME=$INFILE.json
+	faust -json $INFILE -O . > /dev/null
+
+	name=`jq -r '.name' $JSONNAME`
+	version=`jq -r '.version' $JSONNAME`
+	inputs=`jq -r '.inputs' $JSONNAME`
+	outputs=`jq -r '.outputs' $JSONNAME`
+	description=`jq -r '.meta[] | select(.description) | join("")' $JSONNAME`
+	author=`jq -r '.meta[] | select(.copyright) | join("")' $JSONNAME`
+
+	echo "-------------------------"
+	echo "Name: $name"
+	echo "Version: $version"
+	echo "Author: $author" | sed -re 's/[(]c[)]//g'
+	echo "Description: $description"
+	echo "Inputs: $inputs"
+	echo "Outputs: $outputs"
+	echo "Arguments (init, min, max):"
+	jq -r '.ui[] | .items[] | .items[] | [.label,.init,.min,.max] | @csv' $JSONNAME | sed -e "s/^/  /g;s/\"\,/\: /g;s/\"//g;s/\,/ /g"
+	echo "-------------------------"
+
+	# Delete json file
+	rm $JSONNAME
+
+else
+	echo "Could not find $INFILE"
+	exit
+fi
+--------------------------------------
 */
